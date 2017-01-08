@@ -13,8 +13,39 @@ require('./bootstrap');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example', require('./components/Example.vue'));
+window.Event = new class {
+
+	constructor(){
+		this.vue = new Vue();
+	}
+
+	fire(event, data = null){
+		this.vue.$emit(event, data);
+	}
+
+	listen(event, callback){
+		this.vue.$on(event, callback);
+	}
+
+}
+
+Vue.component('mapcontent', require('./components/mapcontent.vue'));
+
+Vue.component('Coupon', require('./components/Coupon.vue'));
+
+/*
+Vue.component('coupon', {
+
+	methods:{
+		onCouponApplied(){
+			Event.fire('applied');
+		}
+	}
+
+
+});*/
 
 const app = new Vue({
     el: '#app'
 });
+
