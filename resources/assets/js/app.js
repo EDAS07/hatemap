@@ -34,20 +34,6 @@ window.Event = new class {
 
 Vue.component('mapcontent', require('./components/mapcontent.vue'));
 
-Vue.component('Coupon', require('./components/Coupon.vue'));
-
-/*
-Vue.component('coupon', {
-
-	methods:{
-		onCouponApplied(){
-			Event.fire('applied');
-		}
-	}
-
-
-});*/
-
 const app = new Vue({
     el: '#app'
 

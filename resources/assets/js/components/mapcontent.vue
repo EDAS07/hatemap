@@ -6,7 +6,7 @@
                     <div class="panel-heading">Hate Map</div>
 
                     <div class="panel-body">
-                        <coupon @applied="onCouponApplied"></coupon>
+                        <Coupon @applied="onCouponApplied"></Coupon>
                     </div>
                     
                 </div>
@@ -18,12 +18,18 @@
 
 <script>
 
+    import Coupon from './Coupon.vue';
+
     export default {
 
         methods: {
             onCouponApplied(){
                 console.log('mapcontent oncoupon applied!');
             }
+        },
+
+        components: {
+            Coupon
         },
 
         created() {

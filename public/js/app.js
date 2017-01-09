@@ -12,50 +12,6 @@ var __vue_styles__ = {}
 __vue_exports__ = __webpack_require__(20)
 
 /* template */
-var __vue_template__ = __webpack_require__(23)
-__vue_options__ = __vue_exports__ = __vue_exports__ || {}
-if (
-  typeof __vue_exports__.default === "object" ||
-  typeof __vue_exports__.default === "function"
-) {
-if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
-__vue_options__ = __vue_exports__ = __vue_exports__.default
-}
-if (typeof __vue_options__ === "function") {
-  __vue_options__ = __vue_options__.options
-}
-__vue_options__.__file = "/Users/chuhancheng/Sites/hateline.dev/resources/assets/js/components/Coupon.vue"
-__vue_options__.render = __vue_template__.render
-__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-880e68b2", __vue_options__)
-  } else {
-    hotAPI.reload("data-v-880e68b2", __vue_options__)
-  }
-})()}
-if (__vue_options__.functional) {console.error("[vue-loader] Coupon.vue: functional components are not supported and should be defined in plain js files using render functions.")}
-
-module.exports = __vue_exports__
-
-
-/***/ },
-/* 4 */
-/***/ function(module, exports, __webpack_require__) {
-
-var __vue_exports__, __vue_options__
-var __vue_styles__ = {}
-
-/* script */
-__vue_exports__ = __webpack_require__(21)
-
-/* template */
 var __vue_template__ = __webpack_require__(22)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
@@ -90,6 +46,7 @@ module.exports = __vue_exports__
 
 
 /***/ },
+/* 4 */,
 /* 5 */,
 /* 6 */,
 /* 7 */,
@@ -104,8 +61,7 @@ module.exports = __vue_exports__
 /* 16 */,
 /* 17 */,
 /* 18 */,
-/* 19 */,
-/* 20 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -125,11 +81,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 
 
 /***/ },
-/* 21 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Coupon_vue__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Coupon_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Coupon_vue__);
 //
 //
 //
@@ -148,6 +106,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 //
 //
 //
+
+
 
 
 /* harmony default export */ exports["default"] = {
@@ -158,12 +118,60 @@ Object.defineProperty(exports, "__esModule", { value: true });
         }
     },
 
+    components: {
+        Coupon: __WEBPACK_IMPORTED_MODULE_0__Coupon_vue___default.a
+    },
+
     created: function created() {
         Event.listen('applied',function(){
             console.log('listend event on mapcontent');
         })
     }
 };
+
+
+/***/ },
+/* 21 */
+/***/ function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = {}
+
+/* script */
+__vue_exports__ = __webpack_require__(19)
+
+/* template */
+var __vue_template__ = __webpack_require__(23)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "/Users/chuhancheng/Sites/hateline.dev/resources/assets/js/components/Coupon.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-880e68b2", __vue_options__)
+  } else {
+    hotAPI.reload("data-v-880e68b2", __vue_options__)
+  }
+})()}
+if (__vue_options__.functional) {console.error("[vue-loader] Coupon.vue: functional components are not supported and should be defined in plain js files using render functions.")}
+
+module.exports = __vue_exports__
 
 
 /***/ },
@@ -183,7 +191,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "panel-heading"
   }, [_vm._v("Hate Map")]), _vm._v(" "), _c('div', {
     staticClass: "panel-body"
-  }, [_c('coupon', {
+  }, [_c('Coupon', {
     on: {
       "applied": _vm.onCouponApplied
     }
@@ -245,47 +253,33 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 
 window.Event = new (function () {
-	function _class() {
-		_classCallCheck(this, _class);
+  function _class() {
+    _classCallCheck(this, _class);
 
-		this.vue = new Vue();
-	}
+    this.vue = new Vue();
+  }
 
-	_createClass(_class, [{
-		key: 'fire',
-		value: function fire(event) {
-			var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+  _createClass(_class, [{
+    key: 'fire',
+    value: function fire(event) {
+      var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
-			this.vue.$emit(event, data);
-		}
-	}, {
-		key: 'listen',
-		value: function listen(event, callback) {
-			this.vue.$on(event, callback);
-		}
-	}]);
+      this.vue.$emit(event, data);
+    }
+  }, {
+    key: 'listen',
+    value: function listen(event, callback) {
+      this.vue.$on(event, callback);
+    }
+  }]);
 
-	return _class;
+  return _class;
 }())();
 
-Vue.component('mapcontent', __webpack_require__(4));
-
-Vue.component('Coupon', __webpack_require__(3));
-
-/*
-Vue.component('coupon', {
-
-	methods:{
-		onCouponApplied(){
-			Event.fire('applied');
-		}
-	}
-
-
-});*/
+Vue.component('mapcontent', __webpack_require__(3));
 
 var app = new Vue({
-	el: '#app'
+  el: '#app'
 
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
