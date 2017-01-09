@@ -5,7 +5,7 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-// require('./bootstrap');
+//require('./bootstrap');
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -13,8 +13,8 @@
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+//import Vue from 'vue';
 
-import Vue from 'vue';
 
 window.Event = new class {
 

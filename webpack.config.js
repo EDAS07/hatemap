@@ -7,9 +7,9 @@ module.exports = {
 
     entry: {
 
-    	app: './resources/assets/js/app.js',
+        app: './resources/assets/js/app.js',
 
-    	vendor: ['vue']
+        vendor: ['vue', 'jquery', 'bootstrap']
 
     },
 
@@ -27,29 +27,29 @@ module.exports = {
 
     module: {
 
-    	rules: [
+        rules: [
 
-    		{
+            {
 
-	    		test: /\.js$/,
+                test: /\.js$/,
 
-	    		exclude: /nude_modules/,
+                exclude: /nude_modules/,
 
-	    		loader: 'babel-loader'
+                loader: 'babel-loader'
 
-	    	},
+            },
 
-	    	{
+            {
 
-	    		test: /\.vue$/,
+                test: /\.vue$/,
 
-	    		exclude: /nude_modules/,
+                exclude: /nude_modules/,
 
-	    		loader: 'vue-loader'
+                loader: 'vue-loader'
 
-	    	},
+            },
 
-    	]
+        ]
 
     },
 
@@ -62,47 +62,55 @@ module.exports = {
 
     plugins: [
 
-    	new webpack.optimize.CommonsChunkPlugin({
+        new webpack.optimize.CommonsChunkPlugin({
 
-    		names: ['vendor']
+            names: ['vendor']
 
-    	})
+        }),
+
+        new webpack.ProvidePlugin({
+            $: 'jquery',
+            jQuery: 'jquery',
+            'window.jQuery': 'jquery',
+            'root.jQuery': 'jquery',
+            Vue: 'vue'
+        }),
 
     ]
 
 
 };
 
-if(process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production') {
 
-	module.exports.plugins.push(
+    module.exports.plugins.push(
 
-		new webpack.optimize.UglifyJsPlugin({
+        new webpack.optimize.UglifyJsPlugin({
 
-			sourcemap: true,
+            sourcemap: true,
 
-			compress: {
+            compress: {
 
-				warnings: false
+                warnings: false
 
-			}
+            }
 
-		})
+        })
 
-	);
+    );
 
-	module.exports.plugins.push(
+    module.exports.plugins.push(
 
-		new webpack.DefinePlugin({
+        new webpack.DefinePlugin({
 
-			'process.env': {
+            'process.env': {
 
-				NODE_ENV: 'production'
+                NODE_ENV: JSON.stringify('production')
 
-			}
+            }
 
-		})
+        })
 
-	);
+    );
 
 }

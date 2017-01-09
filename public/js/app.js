@@ -1,16 +1,18 @@
 webpackJsonp([0],[
 /* 0 */,
-/* 1 */
+/* 1 */,
+/* 2 */,
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = {}
 
 /* script */
-__vue_exports__ = __webpack_require__(5)
+__vue_exports__ = __webpack_require__(20)
 
 /* template */
-var __vue_template__ = __webpack_require__(8)
+var __vue_template__ = __webpack_require__(23)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -44,17 +46,17 @@ module.exports = __vue_exports__
 
 
 /***/ },
-/* 2 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = {}
 
 /* script */
-__vue_exports__ = __webpack_require__(6)
+__vue_exports__ = __webpack_require__(21)
 
 /* template */
-var __vue_template__ = __webpack_require__(7)
+var __vue_template__ = __webpack_require__(22)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -88,9 +90,22 @@ module.exports = __vue_exports__
 
 
 /***/ },
-/* 3 */,
-/* 4 */,
-/* 5 */
+/* 5 */,
+/* 6 */,
+/* 7 */,
+/* 8 */,
+/* 9 */,
+/* 10 */,
+/* 11 */,
+/* 12 */,
+/* 13 */,
+/* 14 */,
+/* 15 */,
+/* 16 */,
+/* 17 */,
+/* 18 */,
+/* 19 */,
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -110,7 +125,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 
 
 /***/ },
-/* 6 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -152,7 +167,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 
 
 /***/ },
-/* 7 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -183,7 +198,7 @@ if (false) {
 }
 
 /***/ },
-/* 8 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -205,14 +220,10 @@ if (false) {
 }
 
 /***/ },
-/* 9 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+/* WEBPACK VAR INJECTION */(function(Vue) {var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -222,7 +233,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-// require('./bootstrap');
+//require('./bootstrap');
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -230,13 +241,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+//import Vue from 'vue';
 
 
 window.Event = new (function () {
 	function _class() {
 		_classCallCheck(this, _class);
 
-		this.vue = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a();
+		this.vue = new Vue();
 	}
 
 	_createClass(_class, [{
@@ -256,9 +268,9 @@ window.Event = new (function () {
 	return _class;
 }())();
 
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('mapcontent', __webpack_require__(2));
+Vue.component('mapcontent', __webpack_require__(4));
 
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('Coupon', __webpack_require__(1));
+Vue.component('Coupon', __webpack_require__(3));
 
 /*
 Vue.component('coupon', {
@@ -272,10 +284,11 @@ Vue.component('coupon', {
 
 });*/
 
-var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
+var app = new Vue({
 	el: '#app'
 
 });
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }
-],[9]);
+],[24]);
