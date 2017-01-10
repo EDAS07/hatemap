@@ -106,6 +106,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -113,9 +114,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 /* harmony default export */ exports["default"] = {
 
     methods: {
-        onCouponApplied: function onCouponApplied(){
+        /*onCouponApplied(){
             console.log('mapcontent oncoupon applied!');
-        }
+        }*/
     },
 
     components: {
@@ -123,11 +124,33 @@ Object.defineProperty(exports, "__esModule", { value: true });
     },
 
     created: function created() {
-        Event.listen('applied',function(){
+        /*Event.listen('applied',function(){
             console.log('listend event on mapcontent');
-        })
+        })*/
+
+        var checkFlag = function () {
+            if(window.loaded === undefined) {
+               window.setTimeout(checkFlag, 100);
+            } else {
+                map = new google.maps.Map(document.getElementById('map'), {
+                        center: {lat: -34.397, lng: 150.644},
+                        zoom: 16
+                    }
+                );
+                var current = {};
+                navigator.geolocation.getCurrentPosition(function(location) {
+                    current = { 
+                        lat:location.coords.latitude, 
+                        lng:location.coords.longitude 
+                    };
+                    map.setCenter(current);
+                });
+            }
+        }
+        checkFlag();
     }
 };
+
 
 
 /***/ },
@@ -179,6 +202,8 @@ module.exports = __vue_exports__
 /***/ function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _vm._m(0)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "container"
   }, [_c('div', {
@@ -189,14 +214,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "panel panel-default"
   }, [_c('div', {
     staticClass: "panel-heading"
-  }, [_vm._v("Hate Map")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("Hate Food")]), _vm._v(" "), _c('div', {
     staticClass: "panel-body"
-  }, [_c('Coupon', {
-    on: {
-      "applied": _vm.onCouponApplied
+  }, [_c('div', {
+    attrs: {
+      "id": "map"
     }
-  })], 1)])])])])
-},staticRenderFns: []}
+  })])])])])])
+}]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
@@ -231,10 +256,7 @@ if (false) {
 /* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(Vue) {var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
+/* WEBPACK VAR INJECTION */(function(Vue) {
 /**
  * First we will load all of this project's JavaScript dependencies which
  * include Vue and Vue Resource. This gives a great starting point for
@@ -251,31 +273,23 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 //import Vue from 'vue';
 
+/*
+window.Event = new class {
 
-window.Event = new (function () {
-  function _class() {
-    _classCallCheck(this, _class);
+	constructor(){
+		this.vue = new Vue();
+	}
 
-    this.vue = new Vue();
-  }
+	fire(event, data = null){
+		this.vue.$emit(event, data);
+	}
 
-  _createClass(_class, [{
-    key: 'fire',
-    value: function fire(event) {
-      var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+	listen(event, callback){
+		this.vue.$on(event, callback);
+	}
 
-      this.vue.$emit(event, data);
-    }
-  }, {
-    key: 'listen',
-    value: function listen(event, callback) {
-      this.vue.$on(event, callback);
-    }
-  }]);
-
-  return _class;
-}())();
-
+}
+*/
 Vue.component('mapcontent', __webpack_require__(3));
 
 var app = new Vue({

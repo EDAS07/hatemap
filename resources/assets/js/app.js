@@ -15,7 +15,7 @@
 
 //import Vue from 'vue';
 
-
+/*
 window.Event = new class {
 
 	constructor(){
@@ -31,7 +31,7 @@ window.Event = new class {
 	}
 
 }
-
+*/
 Vue.component('mapcontent', require('./components/mapcontent.vue'));
 
 const app = new Vue({
