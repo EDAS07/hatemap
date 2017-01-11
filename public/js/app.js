@@ -113,10 +113,106 @@ Object.defineProperty(exports, "__esModule", { value: true });
 
 /* harmony default export */ exports["default"] = {
 
+    data: function(){
+        return {
+            map: null,
+            geoLocation: null,
+        };
+    },
+
     methods: {
-        /*onCouponApplied(){
+        onCouponApplied: function onCouponApplied(){
             console.log('mapcontent oncoupon applied!');
-        }*/
+        },
+
+        initMap: function initMap(){
+            this.map = new google.maps.Map(document.getElementById('map'), {
+                    center: {lat: 23.848123, lng: 121.043316},
+                    zoom: 7,
+                    mapTypeId: google.maps.MapTypeId.HYBRID
+                }
+            );
+        },
+
+        setGeoLocation: function setGeoLocation(lat,lng){
+            this.geoLocation = new google.maps.LatLng(lat, lng);
+        },
+
+        initPlaces: function initPlaces(_redius, _types){
+
+            var request = {
+                location: this.geoLocation,
+                radius: _redius,
+                types: _types
+            };
+
+            var map = this.map
+            var infowindow = new google.maps.InfoWindow();
+            var service = new google.maps.places.PlacesService(this.map);
+            service.nearbySearch(request, callback);
+            
+            function callback(results, status) {
+                if (status == google.maps.places.PlacesServiceStatus.OK) {
+                    for (var i = 0; i < results.length; i++) {
+                        var place = results[i];
+                        createMarker(results[i]);
+                    }
+                }
+            }
+
+            var selectedMarker = null;
+
+            function createMarker(place) {
+                // console.log('debug:', place);
+                var placeLoc = place.geometry.location;
+                var marker = new google.maps.Marker({
+                    map: map,
+                    position: place.geometry.location
+                });
+                
+                google.maps.event.addListener(marker, 'click', function() {
+                    if(selectedMarker != null){
+                        selectedMarker.setAnimation(null);
+                    }
+                    if(marker.getAnimation() === undefined){
+                        marker.setAnimation(null);
+                    }
+                    
+                    selectedMarker = marker;
+
+                    if(marker.getAnimation() !== null){
+                        marker.setAnimation(null);
+                    }else{
+                        marker.setAnimation(google.maps.Animation.BOUNCE);
+                    }
+                    infowindow.setContent(place.name);
+                    infowindow.open(map, this);
+                });
+            }
+
+            google.maps.event.addListener(infowindow, 'closeclick',function(){
+                selectedMarker.setAnimation(null);
+            })
+
+            
+        },
+
+        initGeoLocation: function initGeoLocation(){
+            var map = this.map;
+            var setGeoLocation = this.setGeoLocation;
+            var initPlaces = this.initPlaces;
+            navigator.geolocation.getCurrentPosition(function(location) {
+                var current = { 
+                    lat:location.coords.latitude, 
+                    lng:location.coords.longitude 
+                };
+                setGeoLocation(location.coords.latitude, location.coords.longitude);
+                initPlaces('500', ['restaurant']);
+                map.setCenter(current);
+                map.setZoom(16);
+                map.setMapTypeId(google.maps.MapTypeId.ROADMAP);
+            });
+        }
     },
 
     components: {
@@ -124,30 +220,23 @@ Object.defineProperty(exports, "__esModule", { value: true });
     },
 
     created: function created() {
-        /*Event.listen('applied',function(){
-            console.log('listend event on mapcontent');
-        })*/
-
+        var this$1 = this;
+        
         var checkFlag = function () {
             if(window.loaded === undefined) {
                window.setTimeout(checkFlag, 100);
             } else {
-                map = new google.maps.Map(document.getElementById('map'), {
-                        center: {lat: -34.397, lng: 150.644},
-                        zoom: 16
-                    }
-                );
-                var current = {};
-                navigator.geolocation.getCurrentPosition(function(location) {
-                    current = { 
-                        lat:location.coords.latitude, 
-                        lng:location.coords.longitude 
-                    };
-                    map.setCenter(current);
-                });
+                this$1.initMap();
+                this$1.initGeoLocation();
+
             }
         }
         checkFlag();
+
+
+        /*Event.listen('applied',function(){
+            console.log('listend event on mapcontent');
+        })*/
     }
 };
 
@@ -256,8 +345,7 @@ if (false) {
 /* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(Vue) {
-/**
+/* WEBPACK VAR INJECTION */(function(Vue) {/**
  * First we will load all of this project's JavaScript dependencies which
  * include Vue and Vue Resource. This gives a great starting point for
  * building robust, powerful web applications using Vue and Laravel.
@@ -293,8 +381,16 @@ window.Event = new class {
 Vue.component('mapcontent', __webpack_require__(3));
 
 var app = new Vue({
-  el: '#app'
+  el: '#app',
 
+  mounted: function mounted() {
+    window.loaded = false;
+
+    function initMap() {
+      window.loaded = true;
+    }
+    window.initMap = initMap;
+  }
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 

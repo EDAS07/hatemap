@@ -90,14 +90,10 @@
     <script src="/js/vendor.js"></script>
     <script src="/js/app.js"></script>
     <script type="text/javascript">
-        var map;
-        window.loaded = false;
-        function initMap() {
-            window.loaded = true;
-        }
+        
     </script>
     <script async defer
-        src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyCVbUNzhKACHsLXFyMLYncJEL-OtTMOmVM&callback=initMap">
+        src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyCVbUNzhKACHsLXFyMLYncJEL-OtTMOmVM&callback=initMap&libraries=places">
     </script>
 </body>
 </html>
