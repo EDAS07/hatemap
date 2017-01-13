@@ -29,7 +29,9 @@
                 map: null,
                 userLocation: null,
                 userMarker: null,
-                infowindow: null
+                infowindow: null,
+                storeTypes: ['food'],
+                searchRadius: '1000'
             };
         },
 
@@ -55,35 +57,55 @@
                 this.userLocation = new google.maps.LatLng(lat, lng);
             },            
 
-            initPlaces(_redius, _types){
-
-                let request = {
-                    location: this.userLocation,
-                    radius: _redius,
-                    types: _types,
-                    // rankBy: google.maps.places.RankBy.DISTANCE
-                };
+            initPlaces(_redius){
 
                 let map = this.map;
+                let userLocation = this.userLocation;
                 let infowindow = this.infowindow;
-                let service = new google.maps.places.PlacesService(this.map);
-                service.nearbySearch(request, callback);
-                // service.radarSearch(request, callback);
-                function callback(results, status) {
-                    if (status == google.maps.places.PlacesServiceStatus.OK) {
-                        for (var i = 0; i < results.length; i++) {
-                            var place = results[i];
-                            createMarker(results[i]);
+                let storeTypes = this.storeTypes;
+                let selectedMarker = null;
+                let selectedPlace = null;
+                let userMarker = this.userMarker;
+
+                updateGooglePlaces();
+                initNearByMarker();
+                initMapEvent();
+                function updateGooglePlaces(){
+                    let service = new google.maps.places.PlacesService(map);
+                    let request = {
+                        location: userLocation,
+                        radius: _redius,
+                        types: storeTypes
+                    };
+                    service.nearbySearch(request, callback);
+                    function callback(results, status) {
+                        if (status == google.maps.places.PlacesServiceStatus.OK) {
+                            let pdata = {
+                                results: results
+                            };
+                            AjaxCall('post', '/api/stores', pdata, function(ret){
+                                console.log('google init success!');
+                            } ,null);
                         }
                     }
                 }
 
-                var selectedMarker = null;
-                var selectedPlace = null;
-                var userMarker = this.userMarker;
+                function initNearByMarker(){
+                    let pdata = {
+                        radius: _redius,
+                        userLocation: userLocation,
+                        storeTypes: storeTypes
+                    };
+                    AjaxCall('post', '/api/stores/getNearbyPlace', pdata, function(ret){
+                        console.log('nearby get success:', ret);
+                        for(var key in ret.data){
+                            createMarker(ret.data[key]);
+                        }
+                    } ,null);
+                }
 
                 function createMarker(place) {
-                    var placeLoc = place.geometry.location;
+                    var placeLoc = new google.maps.LatLng(place.lat, place.lng);
                     var marker = new google.maps.Marker({
                         map: map,
                         position: placeLoc
@@ -117,62 +139,64 @@
                     });
                 }
 
-                google.maps.event.addListener(map, 'click',function(){
-                    infowindow.close();
-                    if(selectedMarker != null) selectedMarker.setAnimation(null)
-                })
+                function initMapEvent(){
+                    google.maps.event.addListener(map, 'click',function(){
+                        infowindow.close();
+                        if(selectedMarker != null) selectedMarker.setAnimation(null)
+                    })
 
-                google.maps.event.addListener(map, 'drag',function(){
-                    let iwOuter = $('.gm-style-iw');
-                    iwOuter.parent().parent().css({
-                        'display': 'none'
-                    });
-                })
+                    google.maps.event.addListener(map, 'drag',function(){
+                        let iwOuter = $('.gm-style-iw');
+                        iwOuter.parent().parent().css({
+                            'display': 'none'
+                        });
+                    })
 
-                google.maps.event.addListener(map, 'dragend',function(){
-                    let iwOuter = $('.gm-style-iw');
-                    iwOuter.parent().parent().css({
-                        'display': 'block'
-                    });
-                })
+                    google.maps.event.addListener(map, 'dragend',function(){
+                        let iwOuter = $('.gm-style-iw');
+                        iwOuter.parent().parent().css({
+                            'display': 'block'
+                        });
+                    })
 
-                google.maps.event.addListener(infowindow, 'closeclick',function(){
-                    selectedMarker.setAnimation(null);
-                })
+                    google.maps.event.addListener(infowindow, 'closeclick',function(){
+                        selectedMarker.setAnimation(null);
+                    })
 
-                google.maps.event.addListener(infowindow, 'domready',function(){
-                    let iwOuter = $('.gm-style-iw');
-                    let iwBackground = iwOuter.prev();
-                    iwBackground.css({
-                        'z-index': '2'
-                    });
-                    iwBackground.children(':nth-child(2)').css({'display':'none'});
-                    iwBackground.children(':nth-child(4)').css({'display':'none'});
-                    let iwCloseBtn = iwOuter.next();
-                    iwOuter.css({
-                        'width': '232px',
-                        'height': '129px'
-                    });
-                    iwCloseBtn.css({
-                        'right': '47px',
-                        'top': '53px'
-                    });
+                    google.maps.event.addListener(infowindow, 'domready',function(){
+                        let iwOuter = $('.gm-style-iw');
+                        let iwBackground = iwOuter.prev();
+                        iwBackground.css({
+                            'z-index': '2'
+                        });
+                        iwBackground.children(':nth-child(2)').css({'display':'none'});
+                        iwBackground.children(':nth-child(4)').css({'display':'none'});
+                        let iwCloseBtn = iwOuter.next();
+                        iwOuter.css({
+                            'width': '232px',
+                            'height': '129px'
+                        });
+                        iwCloseBtn.css({
+                            'right': '47px',
+                            'top': '53px'
+                        });
 
-                    let cusContent = new Vue({
-                        el: 'cus-content',
-                        data: {
-                            place: selectedPlace
-                        },
-                        components: {
-                            InfoWindow
-                        },
-                        template: '<InfoWindow :place=place></InfoWindow>',
-                        methods: {
+                        let cusContent = new Vue({
+                            el: 'cus-content',
+                            data: {
+                                place: selectedPlace
+                            },
+                            components: {
+                                InfoWindow
+                            },
+                            template: '<InfoWindow :place=place></InfoWindow>',
+                            methods: {
 
-                        }
-                    });
-                })
-                
+                            }
+                        });
+                    })
+                }
+
             },
 
             initUserMarker(current){
@@ -187,7 +211,6 @@
                     position: current,
                     icon: image
                 });
-                // marker.setAnimation(google.maps.Animation.BOUNCE);
                 this.userMarker = marker;
             },
 
@@ -203,7 +226,7 @@
                     _this.setUserLocation(lat, lng);
                     _this.initInfoWindow();
                     _this.initUserMarker(current);
-                    _this.initPlaces('1000', ['food']);
+                    _this.initPlaces(_this.searchRadius);
 
                     _this.map.setCenter(current);
                     _this.map.setZoom(17);

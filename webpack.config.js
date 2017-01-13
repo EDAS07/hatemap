@@ -9,7 +9,7 @@ module.exports = {
 
         app: './resources/assets/js/app.js',
 
-        vendor: ['vue', 'jquery', 'bootstrap']
+        vendor: ['vue', 'axios', 'jquery', 'bootstrap']
 
     },
 
@@ -73,7 +73,8 @@ module.exports = {
             jQuery: 'jquery',
             'window.jQuery': 'jquery',
             'root.jQuery': 'jquery',
-            Vue: 'vue'
+            Vue: 'vue',
+            axios: 'axios'
         }),
 
     ]
