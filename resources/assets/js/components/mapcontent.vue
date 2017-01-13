@@ -109,11 +109,6 @@
                     var marker = new google.maps.Marker({
                         map: map,
                         position: placeLoc
-                        /*icon: {
-                            url: 'images/circle.png',
-                            anchor: new google.maps.Point(10,10),
-                            scaledSize: new google.maps.Size(10,17),
-                        }*/
                     });
                     
                     google.maps.event.addListener(marker, 'click', function() {
@@ -253,7 +248,7 @@
             Coupon
         },
 
-        created() {        
+        mounted() {        
             var checkFlag = () => {
                 if(window.loaded === undefined) {
                    window.setTimeout(checkFlag, 100);

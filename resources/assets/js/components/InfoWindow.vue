@@ -26,22 +26,21 @@
 </template>
 
 <script>
+
 	export default {
 		props: ['place'],
 		methods:{
 			send(){
 				console.log('send message');
 
-				axios.put('/api/stores/' + this.place.place_id)
-					.then(response => {
-							console.log(response)
-						}
-					);
+				AjaxCall('put', '/api/stores/' + this.place.place_id, null, function(ret){
+				    // console.log('google init success!');
+				} ,null);
 
 			}
 		},
 		mounted(){
-			console.log('placea:', this.place.place_id);
+			// console.log('placea:', this.place.place_id);
 		}
 	}
 </script>

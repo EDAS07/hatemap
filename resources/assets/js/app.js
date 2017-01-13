@@ -31,6 +31,7 @@ window.Event = new class {
 
 }
 */
+
 Vue.component('mapcontent', require('./components/mapcontent.vue'));
 
 window.AjaxCall = function(type, url, data, scb, ecb){

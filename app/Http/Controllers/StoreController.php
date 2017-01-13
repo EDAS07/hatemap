@@ -142,8 +142,9 @@ class StoreController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-        return ['Laravel', 'Vue', 'PHP', 'Javascript', 'Tooling', 'update'];
+        return response()->json([
+            'ReturnCode' => NO_ERROR
+        ]);
     }
 
     /**
