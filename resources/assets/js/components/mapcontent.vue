@@ -161,12 +161,12 @@
                     let cusContent = new Vue({
                         el: 'cus-content',
                         data: {
-                            marker: selectedPlace
+                            place: selectedPlace
                         },
                         components: {
                             InfoWindow
                         },
-                        template: '<InfoWindow :data=marker></InfoWindow>',
+                        template: '<InfoWindow :place=place></InfoWindow>',
                         methods: {
 
                         }

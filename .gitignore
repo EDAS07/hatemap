@@ -1,5 +1,7 @@
 /node_modules
 /public/storage/logs/*
+/public/js/app.js
+/public/js/vendor.js
 /storage/*.key
 /vendor
 /.idea

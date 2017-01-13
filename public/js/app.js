@@ -9,10 +9,10 @@ var __vue_exports__, __vue_options__
 var __vue_styles__ = {}
 
 /* script */
-__vue_exports__ = __webpack_require__(21)
+__vue_exports__ = __webpack_require__(22)
 
 /* template */
-var __vue_template__ = __webpack_require__(25)
+var __vue_template__ = __webpack_require__(27)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -58,10 +58,63 @@ module.exports = __vue_exports__
 /* 13 */,
 /* 14 */,
 /* 15 */,
-/* 16 */,
+/* 16 */
+/***/ function(module, exports) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function () {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		var result = [];
+		for (var i = 0; i < this.length; i++) {
+			var item = this[i];
+			if (item[2]) {
+				result.push("@media " + item[2] + "{" + item[1] + "}");
+			} else {
+				result.push(item[1]);
+			}
+		}
+		return result.join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function (modules, mediaQuery) {
+		if (typeof modules === "string") modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for (var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if (typeof id === "number") alreadyImportedModules[id] = true;
+		}
+		for (i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if (typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if (mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if (mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+/***/ },
 /* 17 */,
 /* 18 */,
-/* 19 */
+/* 19 */,
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -81,7 +134,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 
 
 /***/ },
-/* 20 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -113,22 +166,25 @@ Object.defineProperty(exports, "__esModule", { value: true });
 //
 
 /* harmony default export */ exports["default"] = {
-	props: ['data'],
+	props: ['place'],
 	methods:{
 
+	},
+	created: function created(){
+		console.log('place:', this.place.place_id);
 	}
 };
 
 
 /***/ },
-/* 21 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($, Vue) {Object.defineProperty(exports, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Coupon_vue__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Coupon_vue__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Coupon_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Coupon_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__InfoWindow_vue__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__InfoWindow_vue__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__InfoWindow_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__InfoWindow_vue__);
 //
 //
@@ -293,12 +349,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
                 var cusContent = new Vue({
                     el: 'cus-content',
                     data: {
-                        marker: selectedPlace
+                        place: selectedPlace
                     },
                     components: {
                         InfoWindow: __WEBPACK_IMPORTED_MODULE_1__InfoWindow_vue___default.a
                     },
-                    template: '<InfoWindow :data=marker></InfoWindow>',
+                    template: '<InfoWindow :place=place></InfoWindow>',
                     methods: {
 
                     }
@@ -387,17 +443,31 @@ Object.defineProperty(exports, "__esModule", { value: true });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(1)))
 
 /***/ },
-/* 22 */
+/* 23 */
+/***/ function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(16)();
+// imports
+
+
+// module
+exports.push([module.i, "\n.opinion-window{\n\twidth: 100%;\n\tresize: none;\n}\n.gm-style-iw {\n\ttop: 43px !important;\n\tz-index: 1;\n}\n.size-md{\n\twidth: 250px;\n}\n", ""]);
+
+// exports
+
+
+/***/ },
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = {}
 
 /* script */
-__vue_exports__ = __webpack_require__(19)
+__vue_exports__ = __webpack_require__(20)
 
 /* template */
-var __vue_template__ = __webpack_require__(26)
+var __vue_template__ = __webpack_require__(28)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -431,20 +501,20 @@ module.exports = __vue_exports__
 
 
 /***/ },
-/* 23 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = {}
 
 /* styles */
-__webpack_require__(32)
+__webpack_require__(30)
 
 /* script */
-__vue_exports__ = __webpack_require__(20)
+__vue_exports__ = __webpack_require__(21)
 
 /* template */
-var __vue_template__ = __webpack_require__(24)
+var __vue_template__ = __webpack_require__(26)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -478,7 +548,7 @@ module.exports = __vue_exports__
 
 
 /***/ },
-/* 24 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -486,7 +556,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "panel panel-default size-md"
   }, [_c('div', {
     staticClass: "panel-heading"
-  }, [_vm._v("店家: " + _vm._s(_vm.data.name))]), _vm._v(" "), _vm._m(0)])
+  }, [_vm._v("店家: " + _vm._s(_vm.place.name))]), _vm._v(" "), _vm._m(0)])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "panel-body"
@@ -513,7 +583,7 @@ if (false) {
 }
 
 /***/ },
-/* 25 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -546,7 +616,7 @@ if (false) {
 }
 
 /***/ },
-/* 26 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -568,128 +638,7 @@ if (false) {
 }
 
 /***/ },
-/* 27 */
-/***/ function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(Vue) {/**
- * First we will load all of this project's JavaScript dependencies which
- * include Vue and Vue Resource. This gives a great starting point for
- * building robust, powerful web applications using Vue and Laravel.
- */
-
-//require('./bootstrap');
-
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-
-//import Vue from 'vue';
-
-/*
-window.Event = new class {
-
-	constructor(){
-		this.vue = new Vue();
-	}
-
-	fire(event, data = null){
-		this.vue.$emit(event, data);
-	}
-
-	listen(event, callback){
-		this.vue.$on(event, callback);
-	}
-
-}
-*/
-Vue.component('mapcontent', __webpack_require__(3));
-
-var app = new Vue({
-  el: '#app',
-
-  mounted: function mounted() {
-    window.loaded = false;
-
-    function initMap() {
-      window.loaded = true;
-    }
-    window.initMap = initMap;
-  }
-});
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
-
-/***/ },
-/* 28 */,
 /* 29 */
-/***/ function(module, exports) {
-
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-module.exports = function () {
-	var list = [];
-
-	// return the list of modules as css string
-	list.toString = function toString() {
-		var result = [];
-		for (var i = 0; i < this.length; i++) {
-			var item = this[i];
-			if (item[2]) {
-				result.push("@media " + item[2] + "{" + item[1] + "}");
-			} else {
-				result.push(item[1]);
-			}
-		}
-		return result.join("");
-	};
-
-	// import a list of modules into the list
-	list.i = function (modules, mediaQuery) {
-		if (typeof modules === "string") modules = [[null, modules, ""]];
-		var alreadyImportedModules = {};
-		for (var i = 0; i < this.length; i++) {
-			var id = this[i][0];
-			if (typeof id === "number") alreadyImportedModules[id] = true;
-		}
-		for (i = 0; i < modules.length; i++) {
-			var item = modules[i];
-			// skip already imported module
-			// this implementation is not 100% perfect for weird media query combinations
-			//  when a module is imported multiple times with different media queries.
-			//  I hope this will never occur (Hey this way we have smaller bundles)
-			if (typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-				if (mediaQuery && !item[2]) {
-					item[2] = mediaQuery;
-				} else if (mediaQuery) {
-					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-				}
-				list.push(item);
-			}
-		}
-	};
-	return list;
-};
-
-/***/ },
-/* 30 */
-/***/ function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(29)();
-// imports
-
-
-// module
-exports.push([module.i, "\n.opinion-window{\n\twidth: 100%;\n\tresize: none;\n}\n.gm-style-iw {\n\ttop: 43px !important;\n\tz-index: 1;\n}\n.size-md{\n\twidth: 250px;\n}\n", ""]);
-
-// exports
-
-
-/***/ },
-/* 31 */
 /***/ function(module, exports) {
 
 /*
@@ -911,16 +860,16 @@ function applyToTag(styleElement, obj) {
 
 
 /***/ },
-/* 32 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(30);
+var content = __webpack_require__(23);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
-var update = __webpack_require__(31)(content, {});
+var update = __webpack_require__(29)(content, {});
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -936,5 +885,58 @@ if(false) {
 	module.hot.dispose(function() { update(); });
 }
 
+/***/ },
+/* 31 */
+/***/ function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(Vue) {/**
+ * First we will load all of this project's JavaScript dependencies which
+ * include Vue and Vue Resource. This gives a great starting point for
+ * building robust, powerful web applications using Vue and Laravel.
+ */
+
+//require('./bootstrap');
+
+/**
+ * Next, we will create a fresh Vue application instance and attach it to
+ * the page. Then, you may begin adding components to this application
+ * or customize the JavaScript scaffolding to fit your unique needs.
+ */
+
+//import Vue from 'vue';
+
+/*
+window.Event = new class {
+
+	constructor(){
+		this.vue = new Vue();
+	}
+
+	fire(event, data = null){
+		this.vue.$emit(event, data);
+	}
+
+	listen(event, callback){
+		this.vue.$on(event, callback);
+	}
+
+}
+*/
+Vue.component('mapcontent', __webpack_require__(3));
+
+var app = new Vue({
+  el: '#app',
+
+  mounted: function mounted() {
+    window.loaded = false;
+
+    function initMap() {
+      window.loaded = true;
+    }
+    window.initMap = initMap;
+  }
+});
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+
 /***/ }
-],[27]);
+],[31]);
