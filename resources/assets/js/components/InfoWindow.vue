@@ -13,7 +13,7 @@
 </style>
 
 <template>
-	<div class="panel panel-default size-md">
+	<div class="panel panel-default size-md test">
 		<div class="panel-heading">店家: {{place.name}}</div>
 		<div class="panel-body">
 			<div><textarea class="opinion-window" placeholder="You don't like what?" ></textarea></div>

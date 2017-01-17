@@ -1,4 +1,6 @@
 let webpack = require('webpack');
+let ExtractTextPlugin = require("extract-text-webpack-plugin");
+let OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 let path = require('path');
 
@@ -29,10 +31,8 @@ module.exports = {
 
         rules: [
 
-            {
-                test: /\.css$/,
-                use: [ 'style-loader', 'css-loader' ]
-            },
+            {test: /\.scss$/, loader: ExtractTextPlugin.extract('css-loader!sass-loader')},
+            
 
             {
 
@@ -58,7 +58,6 @@ module.exports = {
 
     },
 
-
     resolve: {
         alias: {
             'vue$': 'vue/dist/vue.common.js'
@@ -82,12 +81,24 @@ module.exports = {
             axios: 'axios'
         }),
 
+        new ExtractTextPlugin("../css/[name].css")
     ]
 
 
 };
 
 if (process.env.NODE_ENV === 'production') {
+
+    module.exports.plugins.push(
+
+            new OptimizeCssAssetsPlugin({
+                assetNameRegExp: /\.css$/g,
+                cssProcessor: require('cssnano'),
+                cssProcessorOptions: { discardComments: {removeAll: true } },
+                canPrint: true
+            })
+
+    );
 
     module.exports.plugins.push(
 

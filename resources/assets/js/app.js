@@ -32,6 +32,8 @@ window.Event = new class {
 }
 */
 
+import style from '../sass/app.scss';
+
 Vue.component('mapcontent', require('./components/mapcontent.vue'));
 
 window.AjaxCall = function(type, url, data, scb, ecb){
