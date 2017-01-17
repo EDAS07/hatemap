@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">Hate Food</div>
 
@@ -9,9 +9,9 @@
                         <!-- <Coupon @applied="onCouponApplied"></Coupon> -->
                         <div id="map"></div>
                     </div>
-                    
                 </div>
             </div>
+            <placeInfo :place=selectedPlace ></placeInfo>
         </div>
     </div>
 </template>
@@ -20,6 +20,7 @@
 <script>
 
     import Coupon from './Coupon.vue';
+    import placeInfo from './placeInfo.vue';
     import InfoWindow from './InfoWindow.vue';
 
     export default {
@@ -31,7 +32,11 @@
                 userMarker: null,
                 infowindow: null,
                 storeTypes: ['food'],
-                searchRadius: '1000'
+                searchRadius: '1000',
+                selectedPlace: {
+                    name: '預設黑店',
+                    vicinity: '無'
+                }
             };
         },
 
@@ -55,7 +60,15 @@
 
             setUserLocation(lat,lng){
                 this.userLocation = new google.maps.LatLng(lat, lng);
-            },            
+            },
+
+            getSelectedPlace(){
+                return this.selectedPlace;
+            },
+
+            setSelectedPlace(data){
+                this.selectedPlace = data;
+            },
 
             initPlaces(_redius){
 
@@ -64,7 +77,8 @@
                 let infowindow = this.infowindow;
                 let storeTypes = this.storeTypes;
                 let selectedMarker = null;
-                let selectedPlace = null;
+                let getSelectedPlace = this.getSelectedPlace;
+                let setSelectedPlace = this.setSelectedPlace;
                 let userMarker = this.userMarker;
 
                 updateGooglePlaces();
@@ -121,7 +135,8 @@
                         userMarker.setAnimation(null);
                         
                         selectedMarker = marker;
-                        selectedPlace = place;
+                        setSelectedPlace(place);
+                        console.log('selected place:', place);
 
                         if(marker.getAnimation() !== null){
                             marker.setAnimation(null);
@@ -131,6 +146,11 @@
                         infowindow.setContent('<cus-content></cus-content>');
                         infowindow.open(map, this);
                         map.panTo(marker.position);
+
+                        AjaxCall('get', '/api/userOpinion/' + place.place_id, null, function(ret){
+                            console.log('ret data: ', ret);
+                            Event.fire('updateComments', ret.data);
+                        } ,null);
                     });
                 }
 
@@ -179,7 +199,7 @@
                         let cusContent = new Vue({
                             el: 'cus-content',
                             data: {
-                                place: selectedPlace
+                                place: getSelectedPlace()
                             },
                             components: {
                                 InfoWindow
@@ -245,7 +265,7 @@
         },
 
         components: {
-            Coupon
+            Coupon, placeInfo
         },
 
         mounted() {        

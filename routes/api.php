@@ -20,5 +20,6 @@ Route::get('/user', function (Request $request) {
 
 Route::post('stores/getNearbyPlace', 'StoreController@getNearbyPlace');
 Route::resource('stores', 'StoreController');
+Route::resource('userOpinion', 'UserOpinionController');
 
 
