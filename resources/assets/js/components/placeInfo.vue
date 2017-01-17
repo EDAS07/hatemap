@@ -5,10 +5,10 @@
 
 	        <div class="panel-body">
 	            <div class="list-group">
-	            	<div class="list-group-item">地址：{{ place.vicinity }}</div>
+	            	<div class="list-group-item list-group-item-success">地址：{{ place.vicinity }}</div>
 	            </div>
 	            <div v-for="comment in comments" class="list-group">
-	            	<div class="list-group-item">評價：{{ comment.comment }}</div>
+	            	<div class="list-group-item list-group-item-info">評價：{{ comment.comment }}</div>
 	            </div>
 	        </div>
 	    </div>

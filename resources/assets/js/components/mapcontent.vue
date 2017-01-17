@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-8">
                 <div class="panel panel-default">
                     <div class="panel-heading">Hate Food</div>
 
@@ -34,7 +34,7 @@
                 storeTypes: ['food'],
                 searchRadius: '1000',
                 selectedPlace: {
-                    name: '預設黑店',
+                    name: '請在地圖選擇店家',
                     vicinity: '無'
                 }
             };
