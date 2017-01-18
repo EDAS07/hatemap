@@ -38,9 +38,10 @@
 				}
 				console.log('send message:', data);
 				AjaxCall('put', '/api/userOpinion/' + this.place.place_id, data, function(ret){
-				    console.log('ret data: ', ret);
+				    console.log('send comment success: ', ret);
 				    _this.comment = '';
 				    Event.fire('updateComments', ret.data);
+				    Event.fire('updateMarkers', ret.data);
 				} ,null);
 			}
 		},

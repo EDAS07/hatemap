@@ -34,14 +34,12 @@
                 selectedPlace: {
                     name: '請在地圖選擇店家',
                     vicinity: '無'
-                }
+                },
+                markers: []
             };
         },
 
         methods: {
-            onCouponApplied(){
-                console.log('mapcontent oncoupon applied!');
-            },
 
             initMap(){
                 this.map = new google.maps.Map(document.getElementById('map'), {
@@ -68,6 +66,10 @@
                 this.selectedPlace = data;
             },
 
+            setMarkers(data){
+                this.markers = data;
+            },
+
             updateGooglePlaces(){
                 let service = new google.maps.places.PlacesService(this.map);
                 let request = {
@@ -88,7 +90,14 @@
                 }
             },
 
+            removeMarkers(){
+                for(var key in this.markers){
+                    this.markers[key].setMap(null);
+                }
+            },
+
             initPlaces(_redius){
+                this.initInfoWindow();
 
                 let map = this.map;
                 let userLocation = this.userLocation;
@@ -98,6 +107,9 @@
                 let getSelectedPlace = this.getSelectedPlace;
                 let setSelectedPlace = this.setSelectedPlace;
                 let userMarker = this.userMarker;
+                let markers = this.markers;
+                let setMarkers = this.setMarkers;
+
 
                 initNearByMarker();
                 initMapEvent();
@@ -113,6 +125,7 @@
                         for(var key in ret.data){
                             createMarker(ret.data[key]);
                         }
+                        setMarkers(markers);
                     } ,null);
                 }
 
@@ -120,9 +133,9 @@
                     var placeLoc = new google.maps.LatLng(place.lat, place.lng);
                     let getStoreUrl = function(){
                         if(place.comments.length > 0){
-                            return 'images/blackmarker.svg';
+                            return 'images/black-shop.jpg';
                         }else{
-                            return 'images/redmarker.png';    
+                            return 'images/bluemarker.ico';    
                         }
                     }
                     let image = {
@@ -136,6 +149,7 @@
                         icon: image,
                         position: placeLoc
                     });
+                    markers.push(marker);
                     
                     google.maps.event.addListener(marker, 'click', function() {
                         if(selectedMarker != null){
@@ -148,7 +162,7 @@
                         
                         selectedMarker = marker;
                         setSelectedPlace(place);
-                        console.log('selected place:', place.place_id);
+                        console.log('selected place:', place.comments);
 
                         if(marker.getAnimation() !== null){
                             marker.setAnimation(null);
@@ -158,11 +172,11 @@
                         infowindow.setContent('<cus-content></cus-content>');
                         infowindow.open(map, this);
                         map.panTo(marker.position);
-
-                        AjaxCall('get', '/api/userOpinion/' + place.place_id, null, function(ret){
+                        Event.fire('updateComments', place.comments);
+                        /*AjaxCall('get', '/api/userOpinion/' + place.place_id, null, function(ret){
                             console.log('ret data: ', ret);
                             Event.fire('updateComments', ret.data);
-                        } ,null);
+                        } ,null);*/
                     });
                 }
 
@@ -253,7 +267,6 @@
                     
                     _this.setUserLocation(lat, lng);
                     _this.updateGooglePlaces();
-                    _this.initInfoWindow();
                     _this.initUserMarker(current);
                     _this.initPlaces(_this.searchRadius);
 
@@ -282,6 +295,8 @@
 
         mounted() {
 
+            let _this = this;
+
             var checkFlag = () => {
                 if(window.loaded === undefined) {
                    window.setTimeout(checkFlag, 100);
@@ -293,6 +308,11 @@
             }
             checkFlag();
 
+            Event.listen('updateMarkers',function(data){
+                // console.log('listend event on mapcontent!', data);
+                _this.removeMarkers();
+                _this.initPlaces(_this.searchRadius);
+            })
         }
     }
 

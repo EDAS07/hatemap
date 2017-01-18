@@ -35,7 +35,7 @@
 			let _this = this;
 
 			Event.listen('updateComments',function(data){
-                console.log('listend event on placeinfo!', data);
+                // console.log('listend event on placeinfo!', data);
                 _this.updateComments(data);
             })
 		}
