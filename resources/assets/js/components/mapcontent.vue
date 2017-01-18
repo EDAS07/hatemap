@@ -200,8 +200,8 @@
                         iwBackground.children(':nth-child(4)').css({'display':'none'});
                         let iwCloseBtn = iwOuter.next();
                         iwOuter.css({
-                            'width': '232px',
-                            'height': '129px'
+                            'top': '43px',
+                            'z-index': '1'
                         });
                         iwCloseBtn.css({
                             'right': '47px',
@@ -255,7 +255,6 @@
                     _this.updateGooglePlaces();
                     _this.initInfoWindow();
                     _this.initUserMarker(current);
-                    _this.initPlaces(_this.searchRadius);
                     _this.initPlaces(_this.searchRadius);
 
                     _this.map.setCenter(current);

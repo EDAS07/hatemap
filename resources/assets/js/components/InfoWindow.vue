@@ -3,10 +3,6 @@
 		width: 100%;
 		resize: none;
 	}
-	.gm-style-iw {
-		top: 43px !important;
-		z-index: 1;
-	}
 	.size-md{
 		width: 250px;
 	}
