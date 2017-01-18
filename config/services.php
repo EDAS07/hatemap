@@ -35,4 +35,10 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'facebook' => [
+        'client_id' => '1309465095758255',
+        'client_secret' => '8da62177edfc3c3d32639e8be506ad65',
+        'redirect' => 'https://hateline.dev/auth/facebook/callback',
+    ],
+
 ];
