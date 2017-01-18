@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\UserOpinion;
+use App\Store;
+use DB;
 use Auth;
 use Log;
 
@@ -54,6 +56,7 @@ class UserOpinionController extends Controller
      */
     public function show($id)
     {
+        Log::info('place_id:' . $id);
         $opinion = UserOpinion::where('place_id', '=', $id)->get();
 
         return response()->json([

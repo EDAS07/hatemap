@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Store;
+use App\UserOpinion;
 use Illuminate\Http\Request;
 use Input;
 use Log;
@@ -37,13 +38,17 @@ class StoreController extends Controller
             foreach($storeTypes as $type){
                 $q->orWhere('type', 'LIKE', "%{$type}%");
             }
-        })->get();
+        })
+        ->get();
 
         foreach($datas as $key => $data ){
             $dis = $this->distance($location['lat'], $location['lng'], $data->lat, $data->lng, 'K') * 1000;
             $datas[$key]['dis'] = $dis;
             if($dis > $radius){
                 unset($datas[$key]);
+            }else{
+                $opinion = UserOpinion::where('place_id', '=', $datas[$key]['place_id'])->get();
+                $datas[$key]['comments'] = $opinion;
             }
         }
 

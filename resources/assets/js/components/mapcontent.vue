@@ -6,7 +6,6 @@
                     <div class="panel-heading">Hate Food</div>
 
                     <div class="panel-body">
-                        <!-- <Coupon @applied="onCouponApplied"></Coupon> -->
                         <div id="map"></div>
                     </div>
                 </div>
@@ -19,7 +18,6 @@
 
 <script>
 
-    import Coupon from './Coupon.vue';
     import placeInfo from './placeInfo.vue';
     import InfoWindow from './InfoWindow.vue';
 
@@ -70,6 +68,26 @@
                 this.selectedPlace = data;
             },
 
+            updateGooglePlaces(){
+                let service = new google.maps.places.PlacesService(this.map);
+                let request = {
+                    location: this.userLocation,
+                    radius: this.searchRadius,
+                    types: this.storeTypes
+                };
+                service.nearbySearch(request, callback);
+                function callback(results, status) {
+                    if (status == google.maps.places.PlacesServiceStatus.OK) {
+                        let pdata = {
+                            results: results
+                        };
+                        AjaxCall('post', '/api/stores', pdata, function(ret){
+                            console.log('google init success!');
+                        } ,null);
+                    }
+                }
+            },
+
             initPlaces(_redius){
 
                 let map = this.map;
@@ -81,28 +99,8 @@
                 let setSelectedPlace = this.setSelectedPlace;
                 let userMarker = this.userMarker;
 
-                updateGooglePlaces();
                 initNearByMarker();
                 initMapEvent();
-                function updateGooglePlaces(){
-                    let service = new google.maps.places.PlacesService(map);
-                    let request = {
-                        location: userLocation,
-                        radius: _redius,
-                        types: storeTypes
-                    };
-                    service.nearbySearch(request, callback);
-                    function callback(results, status) {
-                        if (status == google.maps.places.PlacesServiceStatus.OK) {
-                            let pdata = {
-                                results: results
-                            };
-                            AjaxCall('post', '/api/stores', pdata, function(ret){
-                                console.log('google init success!');
-                            } ,null);
-                        }
-                    }
-                }
 
                 function initNearByMarker(){
                     let pdata = {
@@ -120,8 +118,22 @@
 
                 function createMarker(place) {
                     var placeLoc = new google.maps.LatLng(place.lat, place.lng);
+                    let getStoreUrl = function(){
+                        if(place.comments.length > 0){
+                            return 'images/blackmarker.svg';
+                        }else{
+                            return 'images/redmarker.png';    
+                        }
+                    }
+                    let image = {
+                        url: getStoreUrl(),
+                        scaledSize: new google.maps.Size(30, 30),
+                        origin: new google.maps.Point(0,0),
+                        anchor: new google.maps.Point(0,20)
+                    };
                     var marker = new google.maps.Marker({
                         map: map,
+                        icon: image,
                         position: placeLoc
                     });
                     
@@ -136,7 +148,7 @@
                         
                         selectedMarker = marker;
                         setSelectedPlace(place);
-                        console.log('selected place:', place);
+                        console.log('selected place:', place.place_id);
 
                         if(marker.getAnimation() !== null){
                             marker.setAnimation(null);
@@ -238,9 +250,12 @@
                         lng: lng
                     };
 
+                    
                     _this.setUserLocation(lat, lng);
+                    _this.updateGooglePlaces();
                     _this.initInfoWindow();
                     _this.initUserMarker(current);
+                    _this.initPlaces(_this.searchRadius);
                     _this.initPlaces(_this.searchRadius);
 
                     _this.map.setCenter(current);
@@ -259,16 +274,15 @@
                 },
                     {maximumAge:60000, timeout:10000, enableHighAccuracy:true}
                 );
-
-                
             }
         },
 
         components: {
-            Coupon, placeInfo
+            placeInfo
         },
 
-        mounted() {        
+        mounted() {
+
             var checkFlag = () => {
                 if(window.loaded === undefined) {
                    window.setTimeout(checkFlag, 100);
@@ -280,10 +294,6 @@
             }
             checkFlag();
 
-
-            /*Event.listen('applied',function(){
-                console.log('listend event on mapcontent');
-            })*/
         }
     }
 
