@@ -99,6 +99,8 @@ class StoreController extends Controller
     {
         $places = $request['results'];
 
+        $flag = false;
+
         foreach($places as $place){
             $result = Store::where('place_id', '=', $place['place_id'])->first();
             if(empty($result)){
@@ -111,11 +113,13 @@ class StoreController extends Controller
                 $new_place->vicinity = $place['vicinity'];
                 $new_place->save();
                 Log::info('<= [Create Data][Store] => ' . $place['place_id']);
+                $flag = true;
             }
         }
 
         return response()->json([
-            'ReturnCode' => NO_ERROR
+            'ReturnCode' => NO_ERROR,
+            'update' => $flag
         ]);
     }
 

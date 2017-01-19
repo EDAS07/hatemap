@@ -16,7 +16,9 @@
 		            		<div> {{ comment.name }} </div>	
 	            		</div>
 	            		<div class="comment-comment-container" >
-	            			評價：{{ comment.comment }}
+	            			<div>
+	            				{{ comment.comment }}	
+	            			</div>
 	            		</div>
 	            	</div>
 	            </div>

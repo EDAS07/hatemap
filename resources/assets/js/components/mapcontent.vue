@@ -71,6 +71,7 @@
             },
 
             updateGooglePlaces(){
+                let _this = this;
                 let service = new google.maps.places.PlacesService(this.map);
                 let request = {
                     location: this.userLocation,
@@ -84,7 +85,11 @@
                             results: results
                         };
                         AjaxCall('post', '/api/stores', pdata, function(ret){
-                            console.log('google init success!');
+                            console.log('google init success!', ret);
+                            if(ret.update){
+                                console.log('update new google place!');
+                                _this.initPlaces(_this.searchRadius);
+                            }
                         } ,null);
                     }
                 }
