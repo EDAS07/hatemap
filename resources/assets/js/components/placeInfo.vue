@@ -8,7 +8,17 @@
 	            	<div class="list-group-item list-group-item-success">地址：{{ place.vicinity }}</div>
 	            </div>
 	            <div v-for="comment in comments" class="list-group">
-	            	<div class="list-group-item list-group-item-info">評價：{{ comment.comment }}</div>
+	            	<div class="list-group-item list-group-item-info">
+	            		<div class="comment-user-container" >
+	            			<div class="comment-img" >
+								<a><img v-bind:src="getUserAvatar(comment.facebook_id)"/></a>
+		            		</div>
+		            		<div> {{ comment.name }} </div>	
+	            		</div>
+	            		<div class="comment-comment-container" >
+	            			評價：{{ comment.comment }}
+	            		</div>
+	            	</div>
 	            </div>
 	        </div>
 	    </div>
@@ -21,13 +31,22 @@
 		props: ['place'],
 		data: function(){
 			return {
-				comments: ''
+				comments: '',
+				mytest: '/good'
 			}
 		},
 
 		methods: {
 			updateComments(data){
 				this.comments = data;
+			},
+
+			getUserAvatar(fb_id){
+				if(fb_id == ''){
+					return 'images/user_icon.png';
+				}else{
+					return 'https://graph.facebook.com/v2.8/' +  fb_id + '/picture?type=normal'	;
+				}
 			}
 		},
 

@@ -105,7 +105,9 @@ class RegisterController extends Controller
             ]);
         }
 
-        Log::info('debug user:' . $user);
+        $user->avatar = $socialUser->getAvatar();
+
+        Log::info('debug user:' . $user->avatar);
 
         auth()->login($user);
 

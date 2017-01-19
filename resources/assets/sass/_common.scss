@@ -4,3 +4,23 @@
 		height: 34px;
 	}
 }
+
+
+.comment-img{
+	img {
+		height: 50px;
+		border-radius: 50%;
+	}
+}
+
+.comment-user-container{
+	width: 19%;
+    display: inline-block;
+    text-align: center;
+    vertical-align: top;
+}
+
+.comment-comment-container{
+	display: inline-block;
+    width: 79%;
+}

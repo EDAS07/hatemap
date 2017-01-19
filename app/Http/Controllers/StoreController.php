@@ -47,7 +47,10 @@ class StoreController extends Controller
             if($dis > $radius){
                 unset($datas[$key]);
             }else{
-                $opinion = UserOpinion::where('place_id', '=', $datas[$key]['place_id'])->get();
+                $opinion = UserOpinion::where('place_id', '=', $datas[$key]['place_id'])
+                ->join('users', 'users.id', '=', 'user_opinions.user_id')
+                ->select(['users.name', 'users.facebook_id', 'user_opinions.comment'])
+                ->get();
                 $datas[$key]['comments'] = $opinion;
             }
         }
