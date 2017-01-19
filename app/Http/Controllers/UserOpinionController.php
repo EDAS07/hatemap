@@ -98,7 +98,10 @@ class UserOpinionController extends Controller
         $new_opinion->comment = $comment;
         $new_opinion->save();
 
-        $opinion = UserOpinion::where('place_id', '=', $id)->get();
+        $opinion = UserOpinion::where('place_id', '=', $id)
+        ->join('users', 'users.id', '=', 'user_opinions.user_id')
+        ->select(['users.name', 'users.facebook_id', 'user_opinions.comment'])
+        ->get();
 
         return response()->json([
             'ReturnCode' => NO_ERROR,
