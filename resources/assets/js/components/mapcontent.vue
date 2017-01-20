@@ -67,36 +67,12 @@
                 );
                 var centerControlDiv = document.createElement('div');
                 var centerControl = new CenterControl(centerControlDiv, map);
-
+                centerControlDiv.firstChild.addEventListener('click', function() {
+                    _this.initMapContent();
+                });
                 centerControlDiv.index = 1;
                 this.map.controls[google.maps.ControlPosition.RIGHT_TOP].push(centerControlDiv);
-                function CenterControl(controlDiv, map) {
-
-                  // Set CSS for the control border.
-                  var controlUI = document.createElement('div');
-                  controlUI.style.cursor = 'pointer';
-                  controlUI.style.margin = '10px';
-                  controlUI.title = 'Click to recenter the map';
-                  controlDiv.appendChild(controlUI);
-
-                  var elem = document.createElement("img");
-                  elem.src = 'images/target.png';
-                  elem.setAttribute("height", "25");
-                  controlUI.appendChild(elem);
-
-                  controlUI.addEventListener('click', function() {
-                    // _this.map.panTo(_this.userLocation);
-                    _this.initMapContent();
-                  });
-
-                  elem.addEventListener('mouseover', function() {
-                    elem.setAttribute("height", "30");
-                  });
-                  elem.addEventListener('mouseleave', function() {
-                    elem.setAttribute("height", "25");
-                  });
-
-                }
+                
             },
 
             initInfoWindow(){
@@ -327,7 +303,6 @@
                         lat: lat, 
                         lng: lng
                     };
-
                     
                     _this.setUserLocation(lat, lng);
                     _this.updateGooglePlaces();

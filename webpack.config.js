@@ -11,7 +11,7 @@ module.exports = {
 
         app: './resources/assets/js/app.js',
 
-        vendor: ['vue', 'axios', 'jquery', 'bootstrap', 'bootstrap-sass', 'bootstrap-select']
+        vendor: ['vue', 'axios', 'jquery', 'bootstrap']
 
     },
 
