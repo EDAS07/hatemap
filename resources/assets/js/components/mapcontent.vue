@@ -5,6 +5,9 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <div class="inline-div">Hate Food</div>
+                        <div v-show="map_loading" class="inline-div">
+                            <img src="images/spin_box.gif" style="height: 30px">
+                        </div>
                         <div class="btn-group" style="visibility: hidden" >
                             <button type="button" class="btn btn-default">hidden</button>
                         </div>
@@ -35,6 +38,7 @@
 
         data: function(){
             return {
+                map_loading: false,
                 map: null,
                 userLocation: null,
                 userMarker: null,
@@ -81,7 +85,8 @@
                   controlUI.appendChild(elem);
 
                   controlUI.addEventListener('click', function() {
-                    _this.map.panTo(_this.userLocation);
+                    // _this.map.panTo(_this.userLocation);
+                    _this.initMapContent();
                   });
 
                   elem.addEventListener('mouseover', function() {
@@ -96,6 +101,10 @@
 
             initInfoWindow(){
                 this.infowindow = new google.maps.InfoWindow();
+            },
+
+            setMapLoading(bool){
+                this.map_loading = bool;
             },
 
             setRadius(radius){
@@ -322,24 +331,28 @@
                     
                     _this.setUserLocation(lat, lng);
                     _this.updateGooglePlaces();
+                    _this.removeMarkers();
                     _this.initUserMarker(current);
                     _this.initPlaces(_this.searchRadius);
 
-                    _this.map.setCenter(current);
+                    _this.map.panTo(current);
                     _this.map.setZoom(17);
                     _this.map.setMapTypeId(google.maps.MapTypeId.ROADMAP);
                     
                 }
 
+                _this.setMapLoading(true);
                 navigator.geolocation.getCurrentPosition(function(location) {
                     console.log('get navigator location success!');
+                    _this.setMapLoading(false);
                     init(location.coords.latitude, location.coords.longitude);
                 },
                 function(){
                     console.log('get navigator location fail!');
+                    _this.setMapLoading(false);
                     init(25.083949, 121.558636);
                 },
-                    {maximumAge:60000, timeout:10000, enableHighAccuracy:true}
+                    {maximumAge:0, timeout:10000, enableHighAccuracy:true}
                 );
             }
         },
