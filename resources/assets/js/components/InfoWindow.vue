@@ -36,7 +36,6 @@
 				var data = {
 					comment: this.comment
 				}
-				console.log('send message:', data);
 				AjaxCall('put', '/api/userOpinion/' + this.place.place_id, data, function(ret){
 				    console.log('send comment success: ', ret);
 				    _this.comment = '';

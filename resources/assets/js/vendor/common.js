@@ -42,7 +42,6 @@ window.createMarker = function createMarker(place, _this) {
         icon: image,
         position: placeLoc
     });
-    // markers.push(marker);
     
     google.maps.event.addListener(marker, 'click', function() {
         if(_this.selectedMarker != null){
@@ -55,8 +54,6 @@ window.createMarker = function createMarker(place, _this) {
         
         _this.setSelectedMarker(marker);
         _this.setSelectedPlace(place);
-        console.log('selected place:', place.comments);
-        console.log('selected marker:', _this.selectedMarker);
 
         if(marker.getAnimation() !== null){
             marker.setAnimation(null);

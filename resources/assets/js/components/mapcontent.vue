@@ -1,45 +1,5 @@
 <style type="text/css">
-    .controls {
-      margin-top: 10px;
-      border: 1px solid transparent;
-      border-radius: 2px 0 0 2px;
-      box-sizing: border-box;
-      -moz-box-sizing: border-box;
-      height: 32px;
-      outline: none;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-    }
-
-    #pac-input {
-      background-color: #fff;
-      font-family: Roboto;
-      font-size: 15px;
-      font-weight: 300;
-      margin-left: 12px;
-      padding: 0 11px 0 13px;
-      text-overflow: ellipsis;
-      width: 300px;
-    }
-
-    #pac-input:focus {
-      border-color: #4d90fe;
-    }
-
-    .pac-container {
-      font-family: Roboto;
-    }
-
-    #type-selector {
-      color: #fff;
-      background-color: #4d90fe;
-      padding: 5px 11px 0px 11px;
-    }
-
-    #type-selector label {
-      font-family: Roboto;
-      font-size: 13px;
-      font-weight: 300;
-    }
+    
 </style>
 
 <template>
@@ -116,10 +76,12 @@
                 var centerControlDiv = document.createElement('div');
                 var centerControl = new CenterControl(centerControlDiv, map);
                 centerControlDiv.firstChild.addEventListener('click', function() {
-                    _this.initMapContent();
+                    // _this.initMapContent();
+                    _this.map.setZoom(17);
+                    _this.map.panTo(_this.userLocation);
                 });
                 centerControlDiv.index = 1;
-                this.map.controls[google.maps.ControlPosition.RIGHT_TOP].push(centerControlDiv);
+                this.map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(centerControlDiv);
                 // Create the search box and link it to the UI element.
                 var input = document.getElementById('pac-input');
                 var searchBox = new google.maps.places.SearchBox(input);
@@ -134,7 +96,6 @@
                 searchBox.addListener('places_changed', function() {
                     let places = searchBox.getPlaces();
                     _this.setSearchPlaces(places);
-                    console.log('searchBox place:', places);
                     if (places.length == 0) {
                       return;
                     }
@@ -161,7 +122,7 @@
                 };
                 let markers = [];
                 AjaxCall('post', '/api/stores/updateSearchPlaces', pdata, function(ret){
-                    console.log('updateSearchPlaces:', ret);
+                    console.log('get user search places:', ret);
                     for(var key in ret.data){
                         let marker = createMarker(ret.data[key], _this);
                         markers.push(marker);
@@ -225,9 +186,8 @@
                             results: results
                         };
                         AjaxCall('post', '/api/stores', pdata, function(ret){
-                            console.log('google init success!', ret);
                             if(ret.update){
-                                console.log('update new google place!');
+                                console.log('update new google place!', ret);
                                 _this.initNearByMarker(_this.searchRadius);
                             }
                         } ,null);
@@ -236,10 +196,6 @@
             },
 
             removeMarkers(){
-                console.log('removeMarkers:', this.markers);
-                /*for(var key in this.markers){
-                    this.markers[key].setMap(null);
-                }*/
                 this.markers.forEach(function(marker) {
                     marker.setMap(null);
                 });
@@ -260,7 +216,7 @@
                     storeTypes: _this.storeTypes
                 };
                 AjaxCall('post', '/api/stores/getNearbyPlace', pdata, function(ret){
-                    console.log('nearby get success:', ret);
+                    console.log('get nearby place', ret);
                     for(var key in ret.data){
                         let marker = new createMarker(ret.data[key], _this);
                         markers.push(marker);
@@ -345,9 +301,7 @@
             checkFlag();
 
             Event.listen('updateMarkers',function(data){
-                // console.log('listend event on mapcontent!', data);
                 _this.removeMarkers();
-                console.log('updateMarker, searchPlaces length:', _this.searchPlaces.length);
                 if(_this.searchPlaces.length == 0){
                     _this.initNearByMarker(_this.searchRadius);
                 }else{
