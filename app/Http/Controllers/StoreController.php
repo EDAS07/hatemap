@@ -45,6 +45,7 @@ class StoreController extends Controller
             $dis = $this->distance($location['lat'], $location['lng'], $data->lat, $data->lng, 'K') * 1000;
             $datas[$key]['dis'] = $dis;
             if($dis > $radius){
+                Log::info('dis:' . $dis);
                 unset($datas[$key]);
             }else{
                 $opinion = UserOpinion::where('place_id', '=', $datas[$key]['place_id'])

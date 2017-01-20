@@ -11,11 +11,10 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-    {{-- <link href="/css/app.css" rel="stylesheet"> --}}
     <link href="/css/app.css" rel="stylesheet">
 
     <style type="text/css">
-        #map { height: 400px; }
+        /*#map { height: 400px; }*/
     </style>
 
     <!-- Scripts -->
@@ -90,9 +89,7 @@
     <!-- Scripts -->
     <script src="/js/vendor.js"></script>
     <script src="/js/app.js"></script>
-    <script type="text/javascript">
-        
-    </script>
+    
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyCVbUNzhKACHsLXFyMLYncJEL-OtTMOmVM&callback=initMap&libraries=places">
     </script>

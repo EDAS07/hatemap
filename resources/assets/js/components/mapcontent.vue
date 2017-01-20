@@ -3,7 +3,17 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Hate Food</div>
+                    <div class="panel-heading">
+                        <div class="inline-div">Hate Food</div>
+                        <div class="btn-group" style="visibility: hidden" >
+                            <button type="button" class="btn btn-default">hidden</button>
+                        </div>
+                        <div class="btn-group pull-right radius-group" role="group" aria-label="...">
+                            <button type="button" class="btn btn-default" v-bind:class="{ 'btn-success': searchRadius == 300 }" @click="setRadius(300)" >0.3m</button>
+                            <button type="button" class="btn btn-default" v-bind:class="{ 'btn-success': searchRadius == 500 }" @click="setRadius(500)">0.5km</button>
+                            <button type="button" class="btn btn-default" v-bind:class="{ 'btn-success': searchRadius == 1000 } " @click="setRadius(1000)">1km</button>
+                        </div>
+                    </div>
 
                     <div class="panel-body">
                         <div id="map"></div>
@@ -30,7 +40,7 @@
                 userMarker: null,
                 infowindow: null,
                 storeTypes: ['food'],
-                searchRadius: '1000',
+                searchRadius: '500',
                 selectedPlace: {
                     name: '請在地圖選擇店家',
                     vicinity: '無'
@@ -52,6 +62,12 @@
 
             initInfoWindow(){
                 this.infowindow = new google.maps.InfoWindow();
+            },
+
+            setRadius(radius){
+                this.searchRadius = radius;
+                this.removeMarkers();
+                this.initPlaces(this.searchRadius);
             },
 
             setUserLocation(lat,lng){
@@ -318,6 +334,7 @@
                 _this.removeMarkers();
                 _this.initPlaces(_this.searchRadius);
             })
+
         }
     }
 
