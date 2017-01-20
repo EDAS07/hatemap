@@ -23,6 +23,54 @@ class StoreController extends Controller
     }
 
     /**
+     * update user search place to database
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateSearchPlaces(Request $request)
+    {
+        $places = $request['places'];
+
+        $datas = [];
+        foreach( $places as $key => $place){
+            Log::info('place:' . $place['place_id']);
+            $result = Store::where('place_id', '=', $place['place_id'])->first();
+            if(empty($result)){
+                $new_place = new Store;
+                $new_place->place_id = $place['place_id'];
+                $new_place->name = $place['name'];
+                $new_place->type = implode(",",$place['types']);
+                $new_place->lat = $place['geometry']['location']['lat'];
+                $new_place->lng = $place['geometry']['location']['lng'];
+                $new_place->vicinity = $place['formatted_address'];
+                $new_place->save();
+                Log::info('<= [Create Data][Store] => ' . $place['place_id']);
+            }
+            $opinion = UserOpinion::where('place_id', '=', $place['place_id'])
+            ->join('users', 'users.id', '=', 'user_opinions.user_id')
+            ->select(['users.name', 'users.facebook_id', 'user_opinions.comment'])
+            ->get();
+            $data = [
+                'id' => $place['id'],
+                'name' => $place['name'],
+                'lat' => $place['geometry']['location']['lat'],
+                'lng' => $place['geometry']['location']['lng'],
+                'place_id' => $place['place_id'],
+                'vicinity' => $place['formatted_address'],
+                'comments' => $opinion
+            ];
+            $datas[$key] = $data;
+        }
+
+        return response()->json([
+            'ReturnCode' => NO_ERROR,
+            'data' => $datas
+        ]);
+    }
+    
+
+    /**
      * Display location nearby place
      *
      * @param  \Illuminate\Http\Request  $request

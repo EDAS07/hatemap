@@ -18,6 +18,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:api');
 
 
+Route::post('stores/updateSearchPlaces', 'StoreController@updateSearchPlaces');
 Route::post('stores/getNearbyPlace', 'StoreController@getNearbyPlace');
 Route::resource('stores', 'StoreController');
 Route::resource('userOpinion', 'UserOpinionController');

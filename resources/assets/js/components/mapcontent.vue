@@ -1,3 +1,47 @@
+<style type="text/css">
+    .controls {
+      margin-top: 10px;
+      border: 1px solid transparent;
+      border-radius: 2px 0 0 2px;
+      box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      height: 32px;
+      outline: none;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    #pac-input {
+      background-color: #fff;
+      font-family: Roboto;
+      font-size: 15px;
+      font-weight: 300;
+      margin-left: 12px;
+      padding: 0 11px 0 13px;
+      text-overflow: ellipsis;
+      width: 300px;
+    }
+
+    #pac-input:focus {
+      border-color: #4d90fe;
+    }
+
+    .pac-container {
+      font-family: Roboto;
+    }
+
+    #type-selector {
+      color: #fff;
+      background-color: #4d90fe;
+      padding: 5px 11px 0px 11px;
+    }
+
+    #type-selector label {
+      font-family: Roboto;
+      font-size: 13px;
+      font-weight: 300;
+    }
+</style>
+
 <template>
     <div class="container">
         <div class="row">
@@ -19,6 +63,7 @@
                     </div>
 
                     <div class="panel-body">
+                        <input id="pac-input" class="controls" type="text" v-model="searchText" placeholder="搜尋店家">
                         <div id="map"></div>
                     </div>
                 </div>
@@ -32,7 +77,7 @@
 <script>
 
     import placeInfo from './placeInfo.vue';
-    import InfoWindow from './InfoWindow.vue';
+    // import InfoWindow from './InfoWindow.vue';
 
     export default {
 
@@ -45,11 +90,14 @@
                 infowindow: null,
                 storeTypes: ['food'],
                 searchRadius: '500',
+                searchText: '',
                 selectedPlace: {
                     name: '請在地圖選擇店家',
                     vicinity: '無'
                 },
-                markers: []
+                selectedMarker: null,
+                markers: [],
+                searchPlaces: []
             };
         },
 
@@ -72,11 +120,62 @@
                 });
                 centerControlDiv.index = 1;
                 this.map.controls[google.maps.ControlPosition.RIGHT_TOP].push(centerControlDiv);
-                
+                // Create the search box and link it to the UI element.
+                var input = document.getElementById('pac-input');
+                var searchBox = new google.maps.places.SearchBox(input);
+                this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+                this.map.addListener('bounds_changed', function() {
+                    searchBox.setBounds(_this.map.getBounds());
+                });
+
+                let markers = [];
+
+                searchBox.addListener('places_changed', function() {
+                    let places = searchBox.getPlaces();
+                    _this.setSearchPlaces(places);
+                    console.log('searchBox place:', places);
+                    if (places.length == 0) {
+                      return;
+                    }
+
+                    _this.removeMarkers();
+                    _this.initSearchPlacesMarkers();
+
+                    var bounds = new google.maps.LatLngBounds();
+                    places.forEach(function(place) {
+                      if (place.geometry.viewport) {
+                        bounds.union(place.geometry.viewport);
+                      } else {
+                        bounds.extend(place.geometry.location);
+                      }
+                    });
+                    _this.map.fitBounds(bounds);
+                });
+            },
+
+            initSearchPlacesMarkers(){
+                let _this = this;
+                let pdata = {
+                    places: _this.searchPlaces
+                };
+                let markers = [];
+                AjaxCall('post', '/api/stores/updateSearchPlaces', pdata, function(ret){
+                    console.log('updateSearchPlaces:', ret);
+                    for(var key in ret.data){
+                        let marker = createMarker(ret.data[key], _this);
+                        markers.push(marker);
+                    }
+                    _this.setMarkers(markers);
+                } ,null);
             },
 
             initInfoWindow(){
                 this.infowindow = new google.maps.InfoWindow();
+            },
+
+            setSearchPlaces(data){
+                this.searchPlaces = data;
             },
 
             setMapLoading(bool){
@@ -86,7 +185,9 @@
             setRadius(radius){
                 this.searchRadius = radius;
                 this.removeMarkers();
-                this.initPlaces(this.searchRadius);
+                this.initNearByMarker(this.searchRadius);
+                this.searchPlaces = [];
+                this.searchText = '';
             },
 
             setUserLocation(lat,lng){
@@ -103,6 +204,10 @@
 
             setMarkers(data){
                 this.markers = data;
+            },
+
+            setSelectedMarker(data){
+                this.selectedMarker = data;
             },
 
             updateGooglePlaces(){
@@ -123,7 +228,7 @@
                             console.log('google init success!', ret);
                             if(ret.update){
                                 console.log('update new google place!');
-                                _this.initPlaces(_this.searchRadius);
+                                _this.initNearByMarker(_this.searchRadius);
                             }
                         } ,null);
                     }
@@ -131,152 +236,37 @@
             },
 
             removeMarkers(){
-                for(var key in this.markers){
+                console.log('removeMarkers:', this.markers);
+                /*for(var key in this.markers){
                     this.markers[key].setMap(null);
-                }
+                }*/
+                this.markers.forEach(function(marker) {
+                    marker.setMap(null);
+                });
+                this.markers = [];
             },
 
-            initPlaces(_redius){
-                this.initInfoWindow();
+            initNearByMarker(_redius){
+                let _this = this;
+                // this.initInfoWindow();
 
-                let map = this.map;
-                let userLocation = this.userLocation;
-                let infowindow = this.infowindow;
-                let storeTypes = this.storeTypes;
-                let selectedMarker = null;
-                let getSelectedPlace = this.getSelectedPlace;
-                let setSelectedPlace = this.setSelectedPlace;
-                let userMarker = this.userMarker;
                 let markers = this.markers;
-                let setMarkers = this.setMarkers;
 
+                let init_MapEvent = new initMapEvent(_this);
 
-                initNearByMarker();
-                initMapEvent();
-
-                function initNearByMarker(){
-                    let pdata = {
-                        radius: _redius,
-                        userLocation: userLocation,
-                        storeTypes: storeTypes
-                    };
-                    AjaxCall('post', '/api/stores/getNearbyPlace', pdata, function(ret){
-                        console.log('nearby get success:', ret);
-                        for(var key in ret.data){
-                            createMarker(ret.data[key]);
-                        }
-                        setMarkers(markers);
-                    } ,null);
-                }
-
-                function createMarker(place) {
-                    var placeLoc = new google.maps.LatLng(place.lat, place.lng);
-                    let getStoreUrl = function(){
-                        if(place.comments.length > 0){
-                            return 'images/black-shop.jpg';
-                        }else{
-                            return 'images/bluemarker.ico';    
-                        }
+                let pdata = {
+                    radius: _redius,
+                    userLocation: _this.userLocation,
+                    storeTypes: _this.storeTypes
+                };
+                AjaxCall('post', '/api/stores/getNearbyPlace', pdata, function(ret){
+                    console.log('nearby get success:', ret);
+                    for(var key in ret.data){
+                        let marker = new createMarker(ret.data[key], _this);
+                        markers.push(marker);
                     }
-                    let image = {
-                        url: getStoreUrl(),
-                        scaledSize: new google.maps.Size(30, 30),
-                        origin: new google.maps.Point(0,0),
-                        anchor: new google.maps.Point(0,20)
-                    };
-                    var marker = new google.maps.Marker({
-                        map: map,
-                        icon: image,
-                        position: placeLoc
-                    });
-                    markers.push(marker);
-                    
-                    google.maps.event.addListener(marker, 'click', function() {
-                        if(selectedMarker != null){
-                            selectedMarker.setAnimation(null);
-                        }
-                        if(marker.getAnimation() === undefined){
-                            marker.setAnimation(null);
-                        }
-                        userMarker.setAnimation(null);
-                        
-                        selectedMarker = marker;
-                        setSelectedPlace(place);
-                        console.log('selected place:', place.comments);
-
-                        if(marker.getAnimation() !== null){
-                            marker.setAnimation(null);
-                        }else{
-                            marker.setAnimation(google.maps.Animation.BOUNCE);
-                        }
-                        infowindow.setContent('<cus-content></cus-content>');
-                        infowindow.open(map, this);
-                        map.panTo(marker.position);
-                        Event.fire('updateComments', place.comments);
-                        /*AjaxCall('get', '/api/userOpinion/' + place.place_id, null, function(ret){
-                            console.log('ret data: ', ret);
-                            Event.fire('updateComments', ret.data);
-                        } ,null);*/
-                    });
-                }
-
-                function initMapEvent(){
-                    google.maps.event.addListener(map, 'click',function(){
-                        infowindow.close();
-                        if(selectedMarker != null) selectedMarker.setAnimation(null)
-                    })
-
-                    google.maps.event.addListener(map, 'drag',function(){
-                        let iwOuter = $('.gm-style-iw');
-                        iwOuter.parent().parent().css({
-                            'display': 'none'
-                        });
-                    })
-
-                    google.maps.event.addListener(map, 'dragend',function(){
-                        let iwOuter = $('.gm-style-iw');
-                        iwOuter.parent().parent().css({
-                            'display': 'block'
-                        });
-                    })
-
-                    google.maps.event.addListener(infowindow, 'closeclick',function(){
-                        selectedMarker.setAnimation(null);
-                    })
-
-                    google.maps.event.addListener(infowindow, 'domready',function(){
-                        let iwOuter = $('.gm-style-iw');
-                        let iwBackground = iwOuter.prev();
-                        iwBackground.css({
-                            'z-index': '2'
-                        });
-                        iwBackground.children(':nth-child(2)').css({'display':'none'});
-                        iwBackground.children(':nth-child(4)').css({'display':'none'});
-                        let iwCloseBtn = iwOuter.next();
-                        iwOuter.css({
-                            'top': '43px',
-                            'z-index': '1'
-                        });
-                        iwCloseBtn.css({
-                            'right': '47px',
-                            'top': '53px'
-                        });
-
-                        let cusContent = new Vue({
-                            el: 'cus-content',
-                            data: {
-                                place: getSelectedPlace()
-                            },
-                            components: {
-                                InfoWindow
-                            },
-                            template: '<InfoWindow :place=place></InfoWindow>',
-                            methods: {
-
-                            }
-                        });
-                    })
-                }
+                    _this.setMarkers(markers);
+                } ,null);
 
             },
 
@@ -304,11 +294,14 @@
                         lng: lng
                     };
                     
+                    _this.searchPlaces = [];
+                    _this.searchText = '';
                     _this.setUserLocation(lat, lng);
                     _this.updateGooglePlaces();
                     _this.removeMarkers();
                     _this.initUserMarker(current);
-                    _this.initPlaces(_this.searchRadius);
+                    _this.initInfoWindow();
+                    _this.initNearByMarker(_this.searchRadius);
 
                     _this.map.panTo(current);
                     _this.map.setZoom(17);
@@ -354,7 +347,12 @@
             Event.listen('updateMarkers',function(data){
                 // console.log('listend event on mapcontent!', data);
                 _this.removeMarkers();
-                _this.initPlaces(_this.searchRadius);
+                console.log('updateMarker, searchPlaces length:', _this.searchPlaces.length);
+                if(_this.searchPlaces.length == 0){
+                    _this.initNearByMarker(_this.searchRadius);
+                }else{
+                    _this.initSearchPlacesMarkers();
+                }
             })
 
         }
