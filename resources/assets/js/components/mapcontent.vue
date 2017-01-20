@@ -52,12 +52,46 @@
         methods: {
 
             initMap(){
+                let _this = this;
                 this.map = new google.maps.Map(document.getElementById('map'), {
                         center: {lat: 23.848123, lng: 121.043316},
                         zoom: 7,
-                        mapTypeId: google.maps.MapTypeId.HYBRID
+                        mapTypeId: google.maps.MapTypeId.HYBRID,
+                        mapTypeControl: false,
+                        streetViewControl: false
                     }
                 );
+                var centerControlDiv = document.createElement('div');
+                var centerControl = new CenterControl(centerControlDiv, map);
+
+                centerControlDiv.index = 1;
+                this.map.controls[google.maps.ControlPosition.RIGHT_TOP].push(centerControlDiv);
+                function CenterControl(controlDiv, map) {
+
+                  // Set CSS for the control border.
+                  var controlUI = document.createElement('div');
+                  controlUI.style.cursor = 'pointer';
+                  controlUI.style.margin = '10px';
+                  controlUI.title = 'Click to recenter the map';
+                  controlDiv.appendChild(controlUI);
+
+                  var elem = document.createElement("img");
+                  elem.src = 'images/target.png';
+                  elem.setAttribute("height", "25");
+                  controlUI.appendChild(elem);
+
+                  controlUI.addEventListener('click', function() {
+                    _this.map.panTo(_this.userLocation);
+                  });
+
+                  elem.addEventListener('mouseover', function() {
+                    elem.setAttribute("height", "30");
+                  });
+                  elem.addEventListener('mouseleave', function() {
+                    elem.setAttribute("height", "25");
+                  });
+
+                }
             },
 
             initInfoWindow(){
