@@ -88,7 +88,6 @@ class RegisterController extends Controller
      */
     public function handleProviderCallback()
     {
-        
 
         try{
             $socialUser = Socialite::driver('facebook')->user();    

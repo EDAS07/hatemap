@@ -12,6 +12,7 @@
                         <div v-show="map_loading" class="inline-div">
                             <img src="images/spin_box.gif" style="height: 30px">
                         </div>
+			<!--
                         <div class="btn-group" style="visibility: hidden" >
                             <button type="button" class="btn btn-default">hidden</button>
                         </div>
@@ -19,7 +20,7 @@
                             <button type="button" class="btn btn-default" v-bind:class="{ 'btn-success': searchRadius == 300 }" @click="setRadius(300)" >0.3m</button>
                             <button type="button" class="btn btn-default" v-bind:class="{ 'btn-success': searchRadius == 500 }" @click="setRadius(500)">0.5km</button>
                             <button type="button" class="btn btn-default" v-bind:class="{ 'btn-success': searchRadius == 1000 } " @click="setRadius(1000)">1km</button>
-                        </div>
+                        </div>-->
                     </div>
 
                     <div class="panel-body">
