@@ -60,8 +60,10 @@ window.createMarker = function createMarker(place, _this) {
         }else{
             marker.setAnimation(google.maps.Animation.BOUNCE);
         }
+        console.log('createmarker new click event');
         _this.infowindow.setContent('<cus-content></cus-content>');
         _this.infowindow.open(map, this);
+        console.log('createmarker open InfoWindow');
         _this.map.panTo(marker.position);
         Event.fire('updateComments', place.comments);
     });
@@ -94,6 +96,7 @@ window.initMapEvent = function initMapEvent(_this){
     })
 
     google.maps.event.addListener(_this.infowindow, 'domready',function(){
+        console.log('info donready');
         let iwOuter = $('.gm-style-iw');
         let iwBackground = iwOuter.prev();
         iwBackground.css({

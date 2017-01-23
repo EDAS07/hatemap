@@ -32,6 +32,9 @@
 		},
 		methods:{
 			send(){
+				if(this.comment == ''){
+					return
+				}
 				let _this = this;
 				var data = {
 					comment: this.comment

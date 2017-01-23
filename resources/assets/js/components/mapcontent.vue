@@ -204,12 +204,7 @@
 
             initNearByMarker(_redius){
                 let _this = this;
-                // this.initInfoWindow();
-
                 let markers = this.markers;
-
-                let init_MapEvent = new initMapEvent(_this);
-
                 let pdata = {
                     radius: _redius,
                     userLocation: _this.userLocation,
@@ -243,6 +238,7 @@
 
             initMapContent(){
                 let _this = this;
+                _this.initInfoWindow();
 
                 function init(lat, lng){
                     let current = { 
@@ -256,7 +252,8 @@
                     _this.updateGooglePlaces();
                     _this.removeMarkers();
                     _this.initUserMarker(current);
-                    _this.initInfoWindow();
+
+                    let init_MapEvent = new initMapEvent(_this);
                     _this.initNearByMarker(_this.searchRadius);
 
                     _this.map.panTo(current);
