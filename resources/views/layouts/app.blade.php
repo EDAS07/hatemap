@@ -52,9 +52,9 @@
                                 搜尋半徑 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a onclick="">0.3KM</a></li>
-                                <li><a onclick="">0.5KM</a></li>
-                                <li><a onclick="">1.0KM</a></li>
+                                <li><a class="nav_link" onclick="Event.fire('updateRadius', 300)">0.3KM</a></li>
+                                <li><a class="nav_link" onclick="Event.fire('updateRadius', 500)">0.5KM</a></li>
+                                <li><a class="nav_link" onclick="Event.fire('updateRadius', 1000)">1.0KM</a></li>
                             </ul>
                         </li>
                     </ul>

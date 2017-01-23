@@ -3,10 +3,9 @@
         width: 100%;
         height: 100%;
     }
-    .container{
-        height: 90%;
-    }
     .navbar {
+        position: fixed;
+        width: 100%;
         margin: 0;
     }
 </style>
@@ -319,6 +318,11 @@
                 }else{
                     _this.initSearchPlacesMarkers();
                 }
+            })
+
+            Event.listen('updateRadius',function(data){
+                _this.setRadius(data);
+                console.log('radius:', data);
             })
 
         }

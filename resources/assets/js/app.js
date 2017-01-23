@@ -55,5 +55,13 @@ const app = new Vue({
             window.loaded = true;
         }
         window.initMap = initMap;
+
+        $("a.nav_link").click(function() {
+        	console.log('windlow:', $( window ).width());
+        	if($( window ).width() < 765){
+        		$( ".navbar-toggle" ).trigger( "click" );
+        	}
+        	
+        });
     }
 });
