@@ -1,14 +1,4 @@
-<style type="text/css">
-    html,body, .container, .row, #map, #app{
-        width: 100%;
-        height: 100%;
-    }
-    .navbar {
-        position: fixed;
-        width: 100%;
-        margin: 0;
-    }
-</style>
+
 
 <template>
     <div class="container" style="padding: 0;">

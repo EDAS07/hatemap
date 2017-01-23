@@ -5876,3 +5876,15 @@ button.close {
   font-family: Roboto;
   font-size: 13px;
   font-weight: 300; }
+
+body {
+  overflow: hidden; }
+
+html, body, .container, .row, #map, #app {
+  width: 100%;
+  height: 100%; }
+
+.navbar {
+  position: fixed;
+  width: 100%;
+  margin: 0; }
