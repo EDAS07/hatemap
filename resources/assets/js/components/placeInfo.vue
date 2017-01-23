@@ -1,30 +1,39 @@
-<template>
-	<div class="col-md-4">
-	    <div class="panel panel-default">
-	        <div class="panel-heading">{{ place.name }}</div>
+<style type="text/css">
+	.side-panel{
+		position: absolute;
+	    top: 60%;
+	    right: 5%;
+	    left: 5%;
+	    height: 36%;
+		overflow-x: hidden;
+	}
+</style>
 
-	        <div class="panel-body">
-	            <div class="list-group">
-	            	<div class="list-group-item list-group-item-success">地址：{{ place.vicinity }}</div>
-	            </div>
-	            <div v-for="comment in comments" class="list-group">
-	            	<div class="list-group-item list-group-item-info">
-	            		<div class="comment-user-container" >
-	            			<div class="comment-img" >
-								<a><img v-bind:src="getUserAvatar(comment.facebook_id)"/></a>
-		            		</div>
-		            		<div> {{ comment.name }} </div>	
+<template>
+    <div class="panel panel-default side-panel" >
+        <div class="panel-heading">{{ place.name }}</div>
+
+        <div class="panel-body">
+            <div class="list-group">
+            	<div class="list-group-item list-group-item-success">地址：{{ place.vicinity }}</div>
+            </div>
+            <div v-for="comment in comments" class="list-group">
+            	<div class="list-group-item list-group-item-info">
+            		<div class="comment-user-container" >
+            			<div class="comment-img" >
+							<a><img v-bind:src="getUserAvatar(comment.facebook_id)"/></a>
 	            		</div>
-	            		<div class="comment-comment-container" >
-	            			<div>
-	            				{{ comment.comment }}	
-	            			</div>
-	            		</div>
-	            	</div>
-	            </div>
-	        </div>
-	    </div>
-	</div>
+	            		<div> {{ comment.name }} </div>	
+            		</div>
+            		<div class="comment-comment-container" >
+            			<div>
+            				{{ comment.comment }}	
+            			</div>
+            		</div>
+            	</div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>

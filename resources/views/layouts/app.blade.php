@@ -47,7 +47,16 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        &nbsp;
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                搜尋半徑 <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a onclick="">0.3KM</a></li>
+                                <li><a onclick="">0.5KM</a></li>
+                                <li><a onclick="">1.0KM</a></li>
+                            </ul>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

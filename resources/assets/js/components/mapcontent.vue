@@ -1,20 +1,26 @@
 <style type="text/css">
-    
+    html,body, .container, .row, #map, #app{
+        width: 100%;
+        height: 100%;
+    }
+    .container{
+        height: 90%;
+    }
+    .navbar {
+        margin: 0;
+    }
 </style>
 
 <template>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8">
+    <div class="container" style="padding: 0;">
+        <div class="row" style="margin: 0;">
+            <!-- <div class="col-md-8">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <div class="inline-div">Hate Food</div>
                         <div v-show="map_loading" class="inline-div">
                             <img src="images/spin_box.gif" style="height: 30px">
                         </div>
-                        <!-- <div class="btn-group" style="visibility: hidden" >
-                            <button type="button" class="btn btn-default">hidden</button>
-                        </div> -->
                         <div class="btn-group pull-right radius-group" role="group" aria-label="...">
                             <button type="button" class="btn btn-default" v-bind:class="{ 'btn-success': searchRadius == 300 }" @click="setRadius(300)" >0.3m</button>
                             <button type="button" class="btn btn-default" v-bind:class="{ 'btn-success': searchRadius == 500 }" @click="setRadius(500)">0.5km</button>
@@ -27,8 +33,12 @@
                         <div id="map"></div>
                     </div>
                 </div>
+            </div> -->
+            <div style="width: 100%;height:100%">
+                <input id="pac-input" class="controls" type="search" v-model="searchText" placeholder="搜尋店家">
+                <div id="map"></div>
             </div>
-            <placeInfo :place=selectedPlace ></placeInfo>
+            <placeInfo :place=selectedPlace v-show="show_rightSidebar"></placeInfo>
         </div>
     </div>
 </template>
@@ -57,7 +67,8 @@
                 },
                 selectedMarker: null,
                 markers: [],
-                searchPlaces: []
+                searchPlaces: [],
+                show_rightSidebar: false
             };
         },
 
@@ -113,6 +124,10 @@
                     });
                     _this.map.fitBounds(bounds);
                 });
+            },
+
+            setShow_rightSidebar(data){
+                this.show_rightSidebar = data;
             },
 
             initSearchPlacesMarkers(){

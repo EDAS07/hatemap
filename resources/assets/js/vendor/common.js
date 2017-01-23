@@ -54,16 +54,16 @@ window.createMarker = function createMarker(place, _this) {
         
         _this.setSelectedMarker(marker);
         _this.setSelectedPlace(place);
+        _this.setShow_rightSidebar(true);
 
         if(marker.getAnimation() !== null){
             marker.setAnimation(null);
         }else{
             marker.setAnimation(google.maps.Animation.BOUNCE);
         }
-        console.log('createmarker new click event');
         _this.infowindow.setContent('<cus-content></cus-content>');
         _this.infowindow.open(map, this);
-        console.log('createmarker open InfoWindow');
+        console.log('marker position:', marker.position);
         _this.map.panTo(marker.position);
         Event.fire('updateComments', place.comments);
     });
@@ -74,6 +74,7 @@ window.createMarker = function createMarker(place, _this) {
 window.initMapEvent = function initMapEvent(_this){
     google.maps.event.addListener(_this.map, 'click',function(){
         _this.infowindow.close();
+        _this.setShow_rightSidebar(false);
         if(_this.selectedMarker != null) _this.selectedMarker.setAnimation(null)
     })
 
