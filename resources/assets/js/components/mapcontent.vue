@@ -1,4 +1,7 @@
 
+<style type="text/css">
+    
+</style>
 
 <template>
     <div class="container" style="padding: 0;">
@@ -27,7 +30,9 @@
                 <input id="pac-input" class="controls" type="search" v-model="searchText" placeholder="搜尋店家">
                 <div id="map"></div>
             </div>
-            <placeInfo :place=selectedPlace v-show="show_rightSidebar"></placeInfo>
+            <transition name="comments">
+                <placeInfo :place=selectedPlace v-show="show_rightSidebar"></placeInfo>
+            </transition>
         </div>
     </div>
 </template>
@@ -200,6 +205,7 @@
             },
 
             removeMarkers(){
+                // this.show_rightSidebar = false;
                 this.markers.forEach(function(marker) {
                     marker.setMap(null);
                 });
@@ -221,6 +227,8 @@
                         markers.push(marker);
                     }
                     _this.setMarkers(markers);
+                    let objDiv = document.getElementById("side-panel");
+                    objDiv.scrollTop = objDiv.scrollHeight;
                 } ,null);
 
             },
@@ -302,7 +310,9 @@
             checkFlag();
 
             Event.listen('updateMarkers',function(data){
+
                 _this.removeMarkers();
+
                 if(_this.searchPlaces.length == 0){
                     _this.initNearByMarker(_this.searchRadius);
                 }else{

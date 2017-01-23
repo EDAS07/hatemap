@@ -10,7 +10,7 @@
 </style>
 
 <template>
-    <div class="panel panel-default side-panel" >
+    <div class="panel panel-default side-panel" id="side-panel">
         <div class="panel-heading">{{ place.name }}</div>
 
         <div class="panel-body">
