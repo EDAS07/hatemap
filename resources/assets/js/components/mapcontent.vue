@@ -1,8 +1,4 @@
 
-<style type="text/css">
-    
-</style>
-
 <template>
     <div class="container" style="padding: 0;top: 7%;height: 93%;position:absolute;">
         <div class="row" style="margin: 0;">
@@ -27,7 +23,9 @@
                 </div>
             </div> -->
             <div style="width: 100%;height:100%">
-                <input id="pac-input" class="controls" type="search" v-model="searchText" placeholder="搜尋店家">
+                <form v-on:submit.prevent="onSubmitSearch">
+                    <input id="pac-input" class="controls" type="search" v-model="searchText" placeholder="搜尋店家">
+                </form>
                 <div id="map"></div>
             </div>
             <transition name="comments">
@@ -62,11 +60,15 @@
                 selectedMarker: null,
                 markers: [],
                 searchPlaces: [],
-                show_rightSidebar: false
+                show_rightSidebar: false,
+                searchBox: null
             };
         },
 
         methods: {
+            onSubmitSearch(){
+                google.maps.event.trigger(this.searchBox, 'place_changed');
+            },
 
             initMap(){
                 let _this = this;
@@ -81,7 +83,6 @@
                 var centerControlDiv = document.createElement('div');
                 var centerControl = new CenterControl(centerControlDiv, map);
                 centerControlDiv.firstChild.addEventListener('click', function() {
-                    // _this.initMapContent();
                     _this.map.setZoom(17);
                     _this.map.panTo(_this.userLocation);
                 });
@@ -89,17 +90,17 @@
                 this.map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(centerControlDiv);
                 // Create the search box and link it to the UI element.
                 var input = document.getElementById('pac-input');
-                var searchBox = new google.maps.places.SearchBox(input);
-                this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+                _this.searchBox = new google.maps.places.SearchBox(input);
+                // this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
                 this.map.addListener('bounds_changed', function() {
-                    searchBox.setBounds(_this.map.getBounds());
+                    _this.searchBox.setBounds(_this.map.getBounds());
                 });
 
                 let markers = [];
 
-                searchBox.addListener('places_changed', function() {
-                    let places = searchBox.getPlaces();
+                _this.searchBox.addListener('places_changed', function() {
+                    let places = _this.searchBox.getPlaces();
                     _this.setSearchPlaces(places);
                     if (places.length == 0) {
                       return;

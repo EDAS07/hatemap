@@ -7,7 +7,6 @@
             <div class="panel panel-default">
                 <div class="panel-heading">登入</div>
                 <div class="panel-body panel-heading">
-                    <input type="search" id="myTest"></div>
 
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
                         {{ csrf_field() }}
@@ -71,7 +70,5 @@
         </div>
     </div>
 </div>
-
-
 
 @endsection

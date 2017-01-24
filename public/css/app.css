@@ -5858,7 +5858,10 @@ button.close {
   text-overflow: ellipsis;
   opacity: 0.7;
   width: 93%;
-  max-width: 350px; }
+  max-width: 350px;
+  position: absolute;
+  top: 10px;
+  z-index: 1; }
 
 #pac-input:focus {
   border-color: #4d90fe; }

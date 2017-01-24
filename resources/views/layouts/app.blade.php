@@ -102,12 +102,8 @@
     <script src="/js/vendor.js"></script>
     <script src="/js/app.js"></script>
     
-    <script {{-- async defer --}}
+    <script async defer
         src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyCVbUNzhKACHsLXFyMLYncJEL-OtTMOmVM&callback=initMap&libraries=places">
-    </script>
-    <script type="text/javascript">
-        var input = document.getElementById('myTest');
-        var searchBox = new google.maps.places.Autocomplete(input);
     </script>
 </body>
 </html>
