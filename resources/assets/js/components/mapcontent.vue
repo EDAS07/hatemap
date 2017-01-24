@@ -23,7 +23,7 @@
                 </div>
             </div> -->
             <div style="width: 100%;height:100%">
-                <form v-on:submit.prevent="onSubmitSearch">
+                <form v-on:submit="onSubmitSearch($event)">
                     <input id="pac-input" class="controls" type="search" v-model="searchText" placeholder="搜尋店家">
                 </form>
                 <div id="map"></div>
@@ -66,8 +66,12 @@
         },
 
         methods: {
-            onSubmitSearch(){
+            onSubmitSearch(event){
+                console.log('event', event);
                 google.maps.event.trigger(this.searchBox, 'place_changed');
+                if(event){
+                    event.preventDefault();
+                }
             },
 
             initMap(){
