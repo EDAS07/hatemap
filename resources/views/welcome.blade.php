@@ -1,3 +1,10 @@
+{{-- @extends('layouts.app')
+
+@section('content')
+<mapcontent></mapcontent>
+@endsection --}}
+
+
 <!DOCTYPE html>
 <html lang="en">
     <head>

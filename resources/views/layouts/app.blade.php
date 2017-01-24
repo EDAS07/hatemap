@@ -47,16 +47,19 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                搜尋半徑 <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a class="nav_link" onclick="Event.fire('updateRadius', 300)">0.3KM</a></li>
-                                <li><a class="nav_link" onclick="Event.fire('updateRadius', 500)">0.5KM</a></li>
-                                <li><a class="nav_link" onclick="Event.fire('updateRadius', 1000)">1.0KM</a></li>
-                            </ul>
-                        </li>
+                        @if (Auth::guest())
+                        @else
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    搜尋半徑 <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a class="nav_link" onclick="Event.fire('updateRadius', 300)">0.3KM</a></li>
+                                    <li><a class="nav_link" onclick="Event.fire('updateRadius', 500)">0.5KM</a></li>
+                                    <li><a class="nav_link" onclick="Event.fire('updateRadius', 1000)">1.0KM</a></li>
+                                </ul>
+                            </li>
+                        @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -99,8 +102,12 @@
     <script src="/js/vendor.js"></script>
     <script src="/js/app.js"></script>
     
-    <script async defer
+    <script {{-- async defer --}}
         src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyCVbUNzhKACHsLXFyMLYncJEL-OtTMOmVM&callback=initMap&libraries=places">
+    </script>
+    <script type="text/javascript">
+        var input = document.getElementById('myTest');
+        var searchBox = new google.maps.places.Autocomplete(input);
     </script>
 </body>
 </html>
