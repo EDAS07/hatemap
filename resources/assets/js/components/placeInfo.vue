@@ -53,7 +53,7 @@
 			},
 
 			getUserAvatar(fb_id){
-				if(fb_id == '' || fb_id === undefined){
+				if(fb_id == '' || fb_id === undefined || fb_id == null){
 					return 'images/user_icon.png';
 				}else{
 					return 'https://graph.facebook.com/v2.8/' +  fb_id + '/picture?type=normal'	;
