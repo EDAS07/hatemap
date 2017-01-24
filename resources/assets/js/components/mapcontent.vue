@@ -2,30 +2,11 @@
 <template>
     <div class="container" style="padding: 0;top: 7%;height: 93%;position:absolute;">
         <div class="row" style="margin: 0;">
-            <!-- <div class="col-md-8">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <div class="inline-div">Hate Food</div>
-                        <div v-show="map_loading" class="inline-div">
-                            <img src="images/spin_box.gif" style="height: 30px">
-                        </div>
-                        <div class="btn-group pull-right radius-group" role="group" aria-label="...">
-                            <button type="button" class="btn btn-default" v-bind:class="{ 'btn-success': searchRadius == 300 }" @click="setRadius(300)" >0.3m</button>
-                            <button type="button" class="btn btn-default" v-bind:class="{ 'btn-success': searchRadius == 500 }" @click="setRadius(500)">0.5km</button>
-                            <button type="button" class="btn btn-default" v-bind:class="{ 'btn-success': searchRadius == 1000 } " @click="setRadius(1000)">1km</button>
-                        </div>
-                    </div>
-
-                    <div class="panel-body">
-                        <input id="pac-input" class="controls" type="search" v-model="searchText" placeholder="搜尋店家">
-                        <div id="map"></div>
-                    </div>
-                </div>
-            </div> -->
             <div style="width: 100%;height:100%">
-                <form v-on:submit="onSubmitSearch($event)">
+                <div class="search-bar">
                     <input id="pac-input" class="controls" type="search" v-model="searchText" placeholder="搜尋店家">
-                </form>
+                    <div class="search-button" v-on:click="onSubmitSearch()"><img src="images/search-button-simple.jpg"></div>
+                </div>
                 <div id="map"></div>
             </div>
             <transition name="comments">
@@ -67,11 +48,12 @@
 
         methods: {
             onSubmitSearch(event){
-                console.log('event', event);
-                google.maps.event.trigger(this.searchBox, 'place_changed');
-                if(event){
-                    event.preventDefault();
-                }
+                console.log('click search');
+                
+                var input = document.getElementById('pac-input');
+                google.maps.event.trigger(input, 'focus')
+                google.maps.event.trigger(input, 'keydown', { keyCode: 13 });
+                // google.maps.event.trigger(this.searchBox, 'places_changed');
             },
 
             initMap(){
@@ -105,6 +87,7 @@
 
                 _this.searchBox.addListener('places_changed', function() {
                     let places = _this.searchBox.getPlaces();
+                    console.log('places:', places);
                     _this.setSearchPlaces(places);
                     if (places.length == 0) {
                       return;
