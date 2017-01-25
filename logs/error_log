@@ -1,6 +1,0 @@
-[Tue Jan 10 14:11:19.331328 2017] [ssl:warn] [pid 35522] AH01906: hateline.dev:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
-[Tue Jan 10 14:11:19.331349 2017] [ssl:warn] [pid 35522] AH01909: hateline.dev:443:0 server certificate does NOT include an ID which matches the server name
-[Tue Jan 10 14:11:30.095793 2017] [ssl:warn] [pid 35978] AH01906: hateline.dev:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
-[Tue Jan 10 14:11:30.095802 2017] [ssl:warn] [pid 35978] AH01909: hateline.dev:443:0 server certificate does NOT include an ID which matches the server name
-[Tue Jan 10 14:11:30.151282 2017] [ssl:warn] [pid 35978] AH01906: hateline.dev:443:0 server certificate is a CA certificate (BasicConstraints: CA == TRUE !?)
-[Tue Jan 10 14:11:30.151292 2017] [ssl:warn] [pid 35978] AH01909: hateline.dev:443:0 server certificate does NOT include an ID which matches the server name
