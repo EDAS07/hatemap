@@ -1,13 +1,3 @@
-<style type="text/css">
-	.side-panel{
-		position: absolute;
-	    top: 60%;
-	    right: 5%;
-	    left: 5%;
-	    height: 36%;
-		overflow-x: hidden;
-	}
-</style>
 
 <template>
     <div class="panel panel-default side-panel" id="side-panel">
@@ -42,8 +32,7 @@
 		props: ['place'],
 		data: function(){
 			return {
-				comments: '',
-				mytest: '/good'
+				comments: ''
 			}
 		},
 

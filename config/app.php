@@ -164,6 +164,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
+        Rinvex\Repository\Providers\RepositoryServiceProvider::class,
 
         /*
          * Package Service Providers...

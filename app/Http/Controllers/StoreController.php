@@ -8,8 +8,18 @@ use Illuminate\Http\Request;
 use Input;
 use Log;
 
+use App\Repositories\StoreRepository;
+
 class StoreController extends Controller
 {
+
+    protected $storeRepository;
+
+    public function __construct(StoreRepository $storeRepository)
+    {
+        $this->storeRepository = $storeRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -82,49 +92,13 @@ class StoreController extends Controller
         $location = $request['userLocation'];
         $storeTypes = $request['storeTypes'];
 
-        $datas = Store::where(function($q) use ($storeTypes){
-            foreach($storeTypes as $type){
-                $q->orWhere('type', 'LIKE', "%{$type}%");
-            }
-        })
-        ->get();
-
-        foreach($datas as $key => $data ){
-            $dis = $this->distance($location['lat'], $location['lng'], $data->lat, $data->lng, 'K') * 1000;
-            $datas[$key]['dis'] = $dis;
-            if($dis > $radius){
-                unset($datas[$key]);
-            }else{
-                $opinion = UserOpinion::where('place_id', '=', $datas[$key]['place_id'])
-                ->join('users', 'users.id', '=', 'user_opinions.user_id')
-                ->select(['users.name', 'users.facebook_id', 'user_opinions.comment'])
-                ->get();
-                $datas[$key]['comments'] = $opinion;
-            }
-        }
+        $result = $this->storeRepository->getNearbyStore($radius, $location, $storeTypes, true);
 
         return response()->json([
             'ReturnCode' => NO_ERROR,
-            'data' => $datas
+            'data' => $result['data'],
+            'group' => $result['group']
         ]);
-    }
-
-    private function distance($lat1, $lon1, $lat2, $lon2, $unit) {
-
-      $theta = $lon1 - $lon2;
-      $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
-      $dist = acos($dist);
-      $dist = rad2deg($dist);
-      $miles = $dist * 60 * 1.1515;
-      $unit = strtoupper($unit);
-
-      if ($unit == "K") {
-        return ($miles * 1.609344);
-      } else if ($unit == "N") {
-          return ($miles * 0.8684);
-        } else {
-            return $miles;
-          }
     }
 
     /**

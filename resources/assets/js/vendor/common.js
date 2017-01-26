@@ -22,6 +22,55 @@ window.CenterControl = function CenterControl(controlDiv, map) {
 
 }
 
+window.createGroupMarker = function createGroupMarker(group, _this){
+    var groupLoc = new google.maps.LatLng(group.lat, group.lng);
+
+    let getGroupUrl = function(){
+        if(group.data.length >= 10){
+            return 'images/plus.png';
+        }else{
+            return 'images/number_' +  group.data.length +'.png';
+        }
+    }
+    let image = {
+        url: getGroupUrl(),
+        scaledSize: new google.maps.Size(30, 30),
+        origin: new google.maps.Point(0,0),
+        anchor: new google.maps.Point(0,20)
+    };
+    var marker = new google.maps.Marker({
+        map: _this.map,
+        icon: image,
+        position: groupLoc
+    });
+
+    google.maps.event.addListener(marker, 'click', function() {
+        console.log('click marker');
+        if(_this.selectedMarker != null){
+            _this.selectedMarker.setAnimation(null);
+        }
+        if(marker.getAnimation() === undefined){
+            marker.setAnimation(null);
+        }
+        
+        _this.set('selectedMarker', marker);
+        _this.set('selectedGroup', group);
+        _this.set('show_rightSidebar', false);
+        _this.infowindow.close();
+
+        if(_this.map.getZoom() < 17){
+            _this.map.setZoom(_this.map.getZoom()+1);
+        }else{
+            _this.set('show_groupSidebar', true);
+        }
+        _this.map.panTo(marker.position);
+
+        Event.fire('updateGroup', group);
+    });
+
+    return marker;
+}
+
 window.createMarker = function createMarker(place, _this) {
     var placeLoc = new google.maps.LatLng(place.lat, place.lng);
     let getStoreUrl = function(){
@@ -50,11 +99,11 @@ window.createMarker = function createMarker(place, _this) {
         if(marker.getAnimation() === undefined){
             marker.setAnimation(null);
         }
-        _this.userMarker.setAnimation(null);
         
-        _this.setSelectedMarker(marker);
-        _this.setSelectedPlace(place);
-        _this.setShow_rightSidebar(true);
+        _this.set('selectedMarker', marker);
+        _this.set('selectedPlace', place);
+        _this.set('show_groupSidebar', false);
+        _this.set('show_rightSidebar', true);
 
         if(marker.getAnimation() !== null){
             marker.setAnimation(null);
@@ -74,7 +123,8 @@ window.createMarker = function createMarker(place, _this) {
 window.initMapEvent = function initMapEvent(_this){
     google.maps.event.addListener(_this.map, 'click',function(){
         _this.infowindow.close();
-        _this.setShow_rightSidebar(false);
+        _this.set('show_rightSidebar', false);
+        _this.set('show_groupSidebar', false);
         if(_this.selectedMarker != null) _this.selectedMarker.setAnimation(null)
     })
 
@@ -90,6 +140,11 @@ window.initMapEvent = function initMapEvent(_this){
         iwOuter.parent().parent().css({
             'display': 'block'
         });
+    })
+
+    google.maps.event.addListener(_this.map, 'zoom_changed',function(){
+        console.log('zoom changed', _this.map.getZoom());
+        Event.fire('updateMarkers', null);
     })
 
     google.maps.event.addListener(_this.infowindow, 'closeclick',function(){
@@ -118,7 +173,7 @@ window.initMapEvent = function initMapEvent(_this){
         let cusContent = new Vue({
             el: 'cus-content',
             data: {
-                place: _this.getSelectedPlace()
+                place: _this.get('selectedPlace')
             },
             components: {
                 InfoWindow
@@ -129,4 +184,16 @@ window.initMapEvent = function initMapEvent(_this){
             }
         });
     })
+}
+
+
+window.containsObject = function containsObject(obj, list) {
+    var i;
+    for (i = 0; i < list.length; i++) {
+        if (list[i] === obj) {
+            return true;
+        }
+    }
+
+    return false;
 }
