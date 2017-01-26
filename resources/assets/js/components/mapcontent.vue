@@ -12,6 +12,9 @@
             <transition name="comments">
                 <placeInfo :place=selectedPlace v-show="show_rightSidebar"></placeInfo>
             </transition>
+            <transition name="comments">
+                <groupInfo :group=selectedGroup v-show="show_groupSidebar"></groupInfo>
+            </transition>
         </div>
     </div>
 </template>
@@ -20,6 +23,7 @@
 <script>
 
     import placeInfo from './placeInfo.vue';
+    import groupInfo from './groupInfo.vue';
     // import InfoWindow from './InfoWindow.vue';
 
     export default {
@@ -38,11 +42,14 @@
                     name: '請在地圖選擇店家',
                     vicinity: '無'
                 },
+                selectedGroup: [],
                 selectedMarker: null,
                 markers: [],
                 searchPlaces: [],
                 show_rightSidebar: false,
-                searchBox: null
+                show_groupSidebar: false,
+                searchBox: null,
+                tmpGroupStore: null
             };
         },
 
@@ -53,7 +60,6 @@
                 var input = document.getElementById('pac-input');
                 google.maps.event.trigger(input, 'focus')
                 google.maps.event.trigger(input, 'keydown', { keyCode: 13 });
-                // google.maps.event.trigger(this.searchBox, 'places_changed');
             },
 
             initMap(){
@@ -87,8 +93,7 @@
 
                 _this.searchBox.addListener('places_changed', function() {
                     let places = _this.searchBox.getPlaces();
-                    console.log('places:', places);
-                    _this.setSearchPlaces(places);
+                    _this.set('searchPlaces', places);
                     if (places.length == 0) {
                       return;
                     }
@@ -108,10 +113,6 @@
                 });
             },
 
-            setShow_rightSidebar(data){
-                this.show_rightSidebar = data;
-            },
-
             initSearchPlacesMarkers(){
                 let _this = this;
                 let pdata = {
@@ -120,24 +121,18 @@
                 let markers = [];
                 AjaxCall('post', '/api/stores/updateSearchPlaces', pdata, function(ret){
                     console.log('get user search places:', ret);
+                    _this.removeMarkers();
                     for(var key in ret.data){
                         let marker = createMarker(ret.data[key], _this);
                         markers.push(marker);
                     }
-                    _this.setMarkers(markers);
+                    // _this.setMarkers(markers);
+                    _this.set('markers', markers);
                 } ,null);
             },
 
             initInfoWindow(){
                 this.infowindow = new google.maps.InfoWindow();
-            },
-
-            setSearchPlaces(data){
-                this.searchPlaces = data;
-            },
-
-            setMapLoading(bool){
-                this.map_loading = bool;
             },
 
             setRadius(radius){
@@ -148,24 +143,11 @@
                 this.searchText = '';
             },
 
-            setUserLocation(lat,lng){
-                this.userLocation = new google.maps.LatLng(lat, lng);
+            get(key){
+                return this[key];
             },
-
-            getSelectedPlace(){
-                return this.selectedPlace;
-            },
-
-            setSelectedPlace(data){
-                this.selectedPlace = data;
-            },
-
-            setMarkers(data){
-                this.markers = data;
-            },
-
-            setSelectedMarker(data){
-                this.selectedMarker = data;
+            set(key, data){
+                this[key] = data;
             },
 
             updateGooglePlaces(){
@@ -185,6 +167,7 @@
                         AjaxCall('post', '/api/stores', pdata, function(ret){
                             if(ret.update){
                                 console.log('update new google place!', ret);
+                                _this.removeMarkers();
                                 _this.initNearByMarker(_this.searchRadius);
                             }
                         } ,null);
@@ -193,7 +176,7 @@
             },
 
             removeMarkers(){
-                // this.show_rightSidebar = false;
+                console.log('remove marker====');
                 this.markers.forEach(function(marker) {
                     marker.setMap(null);
                 });
@@ -202,7 +185,7 @@
 
             initNearByMarker(_redius){
                 let _this = this;
-                let markers = this.markers;
+                
                 let pdata = {
                     radius: _redius,
                     userLocation: _this.userLocation,
@@ -210,14 +193,38 @@
                 };
                 AjaxCall('post', '/api/stores/getNearbyPlace', pdata, function(ret){
                     console.log('get nearby place', ret);
-                    for(var key in ret.data){
-                        let marker = new createMarker(ret.data[key], _this);
-                        markers.push(marker);
+                    _this.removeMarkers();
+                    if(_this.map.getZoom() > 16){
+                        console.log('create 50');
+                        marker_create(ret.group, '50');
+                    }else if(_this.map.getZoom() > 14){
+                        console.log('create 100');
+                        marker_create(ret.group, '100');
+                    }else if(_this.map.getZoom() > 13){
+                        console.log('create 300');
+                        marker_create(ret.group, '300');
+                    }else {
+                        console.log('create 1000');
+                        marker_create(ret.group, '1000');
                     }
-                    _this.setMarkers(markers);
+                    
                     let objDiv = document.getElementById("side-panel");
                     objDiv.scrollTop = objDiv.scrollHeight;
                 } ,null);
+
+                let marker_create = function(group, value){
+                    let markers = _this.markers;
+                    for(var key in group[value]){
+                        if(group[value][key]['data'].length == 1){
+                            let marker = new createMarker(group[value][key]['data'][0], _this);
+                            markers.push(marker);
+                        }else{
+                            let marker = new createGroupMarker(group[value][key], _this);
+                            markers.push(marker);
+                        }
+                    }
+                    _this.set('markers', markers);
+                }
 
             },
 
@@ -238,7 +245,7 @@
 
             initMapContent(){
                 let _this = this;
-                _this.initInfoWindow();
+                _this.set('infowindow', new google.maps.InfoWindow());
 
                 function init(lat, lng){
                     let current = { 
@@ -248,9 +255,9 @@
                     
                     _this.searchPlaces = [];
                     _this.searchText = '';
-                    _this.setUserLocation(lat, lng);
+                    _this.set('userLocation', new google.maps.LatLng(lat, lng));
                     _this.updateGooglePlaces();
-                    _this.removeMarkers();
+                    
                     _this.initUserMarker(current);
 
                     let init_MapEvent = new initMapEvent(_this);
@@ -262,15 +269,15 @@
                     
                 }
 
-                _this.setMapLoading(true);
+                _this.set('map_loading', true);
                 navigator.geolocation.getCurrentPosition(function(location) {
                     console.log('get navigator location success!');
-                    _this.setMapLoading(false);
+                    _this.set('map_loading', false);
                     init(location.coords.latitude, location.coords.longitude);
                 },
                 function(){
                     console.log('get navigator location fail!');
-                    _this.setMapLoading(false);
+                    _this.set('map_loading', false);
                     init(25.083949, 121.558636);
                 },
                     {maximumAge:0, timeout:10000, enableHighAccuracy:true}
@@ -279,7 +286,7 @@
         },
 
         components: {
-            placeInfo
+            placeInfo, groupInfo
         },
 
         mounted() {
@@ -299,8 +306,6 @@
 
             Event.listen('updateMarkers',function(data){
 
-                _this.removeMarkers();
-
                 if(_this.searchPlaces.length == 0){
                     _this.initNearByMarker(_this.searchRadius);
                 }else{
@@ -312,6 +317,23 @@
                 _this.setRadius(data);
                 console.log('radius:', data);
             })
+
+            Event.listen('addStoreMarker',function(data){
+                let markers = _this.markers;
+                if(_this.tmpGroupStore != null){
+                    console.log('tmp store null');
+                    _this.tmpGroupStore.setMap(null);
+                }
+
+                let marker = createMarker(data, _this);
+                markers.push(marker);
+                _this.set('markers', markers);
+                _this.set('tmpGroupStore', marker);
+
+                google.maps.event.trigger(_this.tmpGroupStore, 'click');
+            })
+
+
 
         }
     }

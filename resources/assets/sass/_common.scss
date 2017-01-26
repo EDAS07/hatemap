@@ -156,3 +156,13 @@ html,body, .container, .row, #map, #app{
 input[type='text'],input[type='number'],input[type='search'], textarea{
   font-size: 16px;
 }
+
+
+.side-panel{
+  position: absolute;
+  top: 60%;
+  right: 5%;
+  left: 5%;
+  height: 36%;
+  overflow-x: hidden;
+}
