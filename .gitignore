@@ -2,6 +2,7 @@
 /public/storage/logs/*
 /public/js/app.js
 /public/js/vendor.js
+/public/build/*
 /storage/*.key
 /vendor
 /.idea

@@ -10,19 +10,8 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Styles -->
-    <link href="/css/app.css" rel="stylesheet">
+    {!! Assets::style('app.css') !!}
 
-    <style type="text/css">
-        /*#map { height: 400px; }*/
-    </style>
-
-    <!-- Scripts -->
-    <script>
-        window.Laravel = <?php echo json_encode([
-            'csrfToken' => csrf_token(),
-        ]); ?>
-    </script>
 </head>
 <body>
     <div id="app">
@@ -99,11 +88,12 @@
     </div>
 
     <!-- Scripts -->
-    <script src="/js/vendor.js"></script>
-    <script src="/js/app.js"></script>
+    {!! Assets::script('vendor.js') !!}
+    {!! Assets::script('app.js') !!}
     
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyCVbUNzhKACHsLXFyMLYncJEL-OtTMOmVM&callback=initMap&libraries=places">
     </script>
+
 </body>
 </html>

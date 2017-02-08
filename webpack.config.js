@@ -1,6 +1,9 @@
 let webpack = require('webpack');
 let ExtractTextPlugin = require("extract-text-webpack-plugin");
 let OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+let WebpackMd5Hash = require('webpack-md5-hash');
+let ManifestPlugin = require('webpack-manifest-plugin');
+// let VersionFile = require('webpack-version-file');
 
 let path = require('path');
 
@@ -18,9 +21,9 @@ module.exports = {
 
     output: {
 
-        path: path.resolve(__dirname, 'public/js'),
+        path: path.resolve(__dirname, 'public'),
 
-        filename: '[name].js',
+        filename: 'js/[name].js',
 
         publicPath: './public',
 
@@ -81,7 +84,10 @@ module.exports = {
             axios: 'axios'
         }),
 
-        new ExtractTextPlugin("../css/[name].css")
+        new ExtractTextPlugin("css/[name].css"),
+
+        new WebpackMd5Hash(),
+        
     ]
 
 
@@ -129,5 +135,23 @@ if (process.env.NODE_ENV === 'production') {
         })
 
     );
+
+    module.exports.plugins.push(
+
+        new ManifestPlugin(
+        {
+            fileName: 'rev-manifest.json'
+        })
+
+    );
+
+    module.exports.plugins.push(
+
+        new ExtractTextPlugin("css/[name].[chunkhash].css")
+
+    );
+
+    module.exports.output.path = path.resolve(__dirname, 'public/build');
+    module.exports.output.filename = 'js/[name].[chunkhash].js';
 
 }
