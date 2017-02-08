@@ -123,10 +123,24 @@
                     console.log('get user search places:', ret);
                     _this.removeMarkers();
                     for(var key in ret.data){
-                        let marker = createMarker(ret.data[key], _this);
-                        markers.push(marker);
+                        // let marker = createMarker(ret.data[key], _this);
+                        // markers.push(marker);
+                        _this.removeMarkers();
+                        if(_this.map.getZoom() > 16){
+                            console.log('create 50');
+                            _this.marker_create(ret.group, '50');
+                        }else if(_this.map.getZoom() > 14){
+                            console.log('create 100');
+                            _this.marker_create(ret.group, '100');
+                        }else if(_this.map.getZoom() > 13){
+                            console.log('create 300');
+                            _this.marker_create(ret.group, '300');
+                        }else {
+                            console.log('create 1000');
+                            _this.marker_create(ret.group, '1000');
+                        }
                     }
-                    // _this.setMarkers(markers);
+
                     _this.set('markers', markers);
                 } ,null);
             },
@@ -196,37 +210,38 @@
                     _this.removeMarkers();
                     if(_this.map.getZoom() > 16){
                         console.log('create 50');
-                        marker_create(ret.group, '50');
+                        _this.marker_create(ret.group, '50');
                     }else if(_this.map.getZoom() > 14){
                         console.log('create 100');
-                        marker_create(ret.group, '100');
+                        _this.marker_create(ret.group, '100');
                     }else if(_this.map.getZoom() > 13){
                         console.log('create 300');
-                        marker_create(ret.group, '300');
+                        _this.marker_create(ret.group, '300');
                     }else {
                         console.log('create 1000');
-                        marker_create(ret.group, '1000');
+                        _this.marker_create(ret.group, '1000');
                     }
                     
                     let objDiv = document.getElementById("side-panel");
                     objDiv.scrollTop = objDiv.scrollHeight;
                 } ,null);
 
-                let marker_create = function(group, value){
-                    let markers = _this.markers;
-                    for(var key in group[value]){
-                        if(group[value][key]['data'].length == 1){
-                            let marker = new createMarker(group[value][key]['data'][0], _this);
-                            markers.push(marker);
-                        }else{
-                            let marker = new createGroupMarker(group[value][key], _this);
-                            markers.push(marker);
-                        }
-                    }
-                    _this.set('markers', markers);
-                }
-
             },
+
+            marker_create(group, value){
+                let _this = this;
+                let markers = _this.markers;
+                for(var key in group[value]){
+                    if(group[value][key]['data'].length == 1){
+                        let marker = new createMarker(group[value][key]['data'][0], _this);
+                        markers.push(marker);
+                    }else{
+                        let marker = new createGroupMarker(group[value][key], _this);
+                        markers.push(marker);
+                    }
+                }
+                _this.set('markers', markers);
+            },            
 
             initUserMarker(current){
                 let image = {
