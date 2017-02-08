@@ -45,7 +45,8 @@ class StoreController extends Controller
 
         return response()->json([
             'ReturnCode' => NO_ERROR,
-            'data' => $result
+            'data' => $result['data'],
+            'group' => $result['group']
         ]);
     }
     

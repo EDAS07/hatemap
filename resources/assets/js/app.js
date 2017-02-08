@@ -16,14 +16,21 @@ window.AjaxCall = function(type, url, data, scb, ecb){
 		})
 		.then(
 			response => {
+				console.log('response:', response);
 				if(response.data.ReturnCode == 0x00000000){
 					scb(response.data);
 				}
+
+
 			}
 		)
 		.catch(
 			error => {
-				console.log(error);
+				let er = Object.assign({}, error);
+				if(er.response.status == 401){
+					location.href="login";
+				}
+				
 				ecb();
 			}
 		);

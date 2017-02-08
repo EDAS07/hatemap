@@ -56,7 +56,7 @@
         methods: {
             onSubmitSearch(event){
                 console.log('click search');
-                
+                this.removeMarkers();
                 var input = document.getElementById('pac-input');
                 google.maps.event.trigger(input, 'focus')
                 google.maps.event.trigger(input, 'keydown', { keyCode: 13 });
@@ -98,8 +98,10 @@
                       return;
                     }
 
-                    _this.removeMarkers();
-                    _this.initSearchPlacesMarkers();
+                    console.log('place changed!');
+
+                    // _this.removeMarkers();
+                    // _this.initSearchPlacesMarkers();
 
                     var bounds = new google.maps.LatLngBounds();
                     places.forEach(function(place) {
@@ -118,30 +120,25 @@
                 let pdata = {
                     places: _this.searchPlaces
                 };
-                let markers = [];
+                // let markers = [];
                 AjaxCall('post', '/api/stores/updateSearchPlaces', pdata, function(ret){
                     console.log('get user search places:', ret);
                     _this.removeMarkers();
-                    for(var key in ret.data){
-                        // let marker = createMarker(ret.data[key], _this);
-                        // markers.push(marker);
-                        _this.removeMarkers();
-                        if(_this.map.getZoom() > 16){
-                            console.log('create 50');
-                            _this.marker_create(ret.group, '50');
-                        }else if(_this.map.getZoom() > 14){
-                            console.log('create 100');
-                            _this.marker_create(ret.group, '100');
-                        }else if(_this.map.getZoom() > 13){
-                            console.log('create 300');
-                            _this.marker_create(ret.group, '300');
-                        }else {
-                            console.log('create 1000');
-                            _this.marker_create(ret.group, '1000');
-                        }
+                    if(_this.map.getZoom() > 16){
+                        console.log('create 50');
+                        _this.marker_create(ret.group, '50');
+                    }else if(_this.map.getZoom() > 14){
+                        console.log('create 100');
+                        _this.marker_create(ret.group, '100');
+                    }else if(_this.map.getZoom() > 13){
+                        console.log('create 300');
+                        _this.marker_create(ret.group, '300');
+                    }else {
+                        console.log('create 1000');
+                        _this.marker_create(ret.group, '1000');
                     }
 
-                    _this.set('markers', markers);
+                    // _this.set('markers', markers);
                 } ,null);
             },
 
@@ -190,7 +187,6 @@
             },
 
             removeMarkers(){
-                console.log('remove marker====');
                 this.markers.forEach(function(marker) {
                     marker.setMap(null);
                 });
@@ -209,16 +205,16 @@
                     console.log('get nearby place', ret);
                     _this.removeMarkers();
                     if(_this.map.getZoom() > 16){
-                        console.log('create 50');
+                        // console.log('create 50');
                         _this.marker_create(ret.group, '50');
                     }else if(_this.map.getZoom() > 14){
-                        console.log('create 100');
+                        // console.log('create 100');
                         _this.marker_create(ret.group, '100');
                     }else if(_this.map.getZoom() > 13){
-                        console.log('create 300');
+                        // console.log('create 300');
                         _this.marker_create(ret.group, '300');
                     }else {
-                        console.log('create 1000');
+                        // console.log('create 1000');
                         _this.marker_create(ret.group, '1000');
                     }
                     
