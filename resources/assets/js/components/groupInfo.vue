@@ -4,7 +4,7 @@
         <div class="panel-heading">店家列表</div>
 
         <div class="panel-body">
-            <div class="list-group" v-for="store in stores">
+            <div class="list-group" v-for="store in stores" style="cursor:pointer;">
             	<div class="list-group-item list-group-item-info" @click="showStore(store)" >{{ store.name }}</div>
             </div>
         </div>

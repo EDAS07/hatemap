@@ -1,21 +1,25 @@
 
 <template>
-    <div class="container" style="padding: 0;top: 7%;height: 93%;position:absolute;">
-        <div class="row" style="margin: 0;">
-            <div style="width: 100%;height:100%">
-                <div class="search-bar">
-                    <input id="pac-input" class="controls" type="search" v-model="searchText" placeholder="搜尋店家">
-                    <div class="search-button" v-on:click="onSubmitSearch()"><img src="images/search-button-simple.jpg"></div>
+    <div class="container" style="padding: 0;">
+        <div class="container map-container">
+            <div class="row" style="margin: 0;">
+                <div style="width: 100%;height:100%">
+                    <transition name="searchBar">
+                        <div class="search-bar" v-show="!show_rightSidebar && !show_groupSidebar">
+                            <input id="pac-input" class="controls" type="search" v-model="searchText" placeholder="搜尋店家">
+                            <div class="search-button" v-on:click="onSubmitSearch()"><img src="images/search-button-simple.jpg"></div>
+                        </div>
+                    </transition>
+                    <div id="map"></div>
                 </div>
-                <div id="map"></div>
             </div>
-            <transition name="comments">
-                <placeInfo :place=selectedPlace v-show="show_rightSidebar"></placeInfo>
-            </transition>
-            <transition name="comments">
-                <groupInfo :group=selectedGroup v-show="show_groupSidebar"></groupInfo>
-            </transition>
         </div>
+        <transition name="comments">
+            <placeInfo :place=selectedPlace :group=selectedGroup v-show="show_rightSidebar"></placeInfo>
+        </transition>
+        <transition name="comments">
+            <groupInfo :group=selectedGroup v-show="show_groupSidebar"></groupInfo>
+        </transition>
     </div>
 </template>
 
@@ -72,6 +76,21 @@
                         streetViewControl: false
                     }
                 );
+
+                google.maps.Map.prototype.panToWithOffset = function(latlng, offsetX, offsetY) {
+                    var map = this;
+                    var ov = new google.maps.OverlayView();
+                    ov.onAdd = function() {
+                        var proj = this.getProjection();
+                        var aPoint = proj.fromLatLngToContainerPixel(latlng);
+                        aPoint.x = aPoint.x+offsetX;
+                        aPoint.y = aPoint.y+offsetY;
+                        map.panTo(proj.fromContainerPixelToLatLng(aPoint));
+                    }; 
+                    ov.draw = function() {}; 
+                    ov.setMap(this); 
+                };
+
                 var centerControlDiv = document.createElement('div');
                 var centerControl = new CenterControl(centerControlDiv, map);
                 centerControlDiv.firstChild.addEventListener('click', function() {
@@ -344,6 +363,10 @@
                 google.maps.event.trigger(_this.tmpGroupStore, 'click');
             })
 
+            Event.listen('showGroupList',function(data){
+                _this.set('show_rightSidebar', false);
+                _this.set('show_groupSidebar', true);
+            })
 
 
         }

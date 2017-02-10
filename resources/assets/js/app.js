@@ -1,7 +1,8 @@
 
 import style from '../sass/app.scss';
 
-require('./vendor/common.js')
+require('./vendor/common.js');
+// require('jquery-ui-bundle');
 
 Vue.component('mapcontent', require('./components/mapcontent.vue'));
 
@@ -70,5 +71,13 @@ const app = new Vue({
         	}
         	
         });
+
+        /*$("div[id='dragx']").draggable({
+        	axis: "x",
+        	revert: true,
+        	drag: function(event, ui) {
+        	      
+        	}
+        });*/
     }
 });

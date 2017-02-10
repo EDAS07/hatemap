@@ -63,7 +63,8 @@ window.createGroupMarker = function createGroupMarker(group, _this){
         }else{
             _this.set('show_groupSidebar', true);
         }
-        _this.map.panTo(marker.position);
+
+        _this.map.panToWithOffset(marker.position, 0, 150);
 
         Event.fire('updateGroup', group);
     });
@@ -113,7 +114,8 @@ window.createMarker = function createMarker(place, _this) {
         _this.infowindow.setContent('<cus-content></cus-content>');
         _this.infowindow.open(map, this);
         console.log('marker position:', marker.position);
-        _this.map.panTo(marker.position);
+        // _this.map.panTo(marker.position);
+        _this.map.panToWithOffset(marker.position, 0, 150);
         Event.fire('updateComments', place.comments);
     });
 
@@ -123,6 +125,7 @@ window.createMarker = function createMarker(place, _this) {
 window.initMapEvent = function initMapEvent(_this){
     google.maps.event.addListener(_this.map, 'click',function(){
         _this.infowindow.close();
+        _this.set('selectedGroup', []);
         _this.set('show_rightSidebar', false);
         _this.set('show_groupSidebar', false);
         if(_this.selectedMarker != null) _this.selectedMarker.setAnimation(null)
