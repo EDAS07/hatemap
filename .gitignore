@@ -10,3 +10,5 @@ Homestead.json
 Homestead.yaml
 .env
 logs/*
+sftp-config.json
+npm-debug.log
