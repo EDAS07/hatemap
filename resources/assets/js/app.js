@@ -2,7 +2,6 @@
 import style from '../sass/app.scss';
 
 require('./vendor/common.js');
-// require('jquery-ui-bundle');
 
 Vue.component('mapcontent', require('./components/mapcontent.vue'));
 

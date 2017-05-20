@@ -189,19 +189,6 @@ window.initMapEvent = function initMapEvent(_this){
     })
 }
 
-
-/*window.containsObject = function containsObject(obj, list) {
-    var i;
-    for (i = 0; i < list.length; i++) {
-        if (list[i] === obj) {
-            return true;
-        }
-    }
-
-    return false;
-}*/
-
-
 window.isFunction = function isFunction(functionToCheck) {
     var getType = {};
     return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
