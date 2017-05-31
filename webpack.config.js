@@ -6,17 +6,15 @@ let ManifestPlugin = require('webpack-manifest-plugin');
 
 let path = require('path');
 
-
 module.exports = {
 
     entry: {
 
         app: './resources/assets/js/app.js',
 
-        vendor: ['vue', 'axios', 'jquery', 'bootstrap']
+        vendor: ['vue', 'vue-router', 'axios', 'jquery', 'bootstrap']
 
     },
-
 
     output: {
         /*
@@ -67,7 +65,10 @@ module.exports = {
 
     resolve: {
         alias: {
-            'vue$': 'vue/dist/vue.common.js'
+            'vue$': 'vue/dist/vue.common.js',
+            'vue-router$': 'vue-router/dist/vue-router.min.js',
+            '@sass': path.resolve(__dirname, 'resources/assets/sass'),
+            '@components': path.resolve(__dirname, 'resources/assets/js/components')
         }
     },
 
@@ -90,7 +91,8 @@ module.exports = {
             'window.jQuery': 'jquery',
             'root.jQuery': 'jquery',
             Vue: 'vue',     // -> this 'vue' is mean resolve alias key 'vue$'
-                            // -> soe use 'vue/dist/vue.common.js' is work
+                            // -> so use 'vue/dist/vue.common.js' is work
+            VueRouter: 'vue-router',
             axios: 'axios'
         }),
 

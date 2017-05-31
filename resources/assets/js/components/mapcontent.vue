@@ -329,7 +329,6 @@
                 } else {
                     this.initMap();
                     this.initMapContent();
-
                 }
             }
             checkFlag();
