@@ -1,10 +1,9 @@
 
 <template>
-    <div ref="map"></div>
+    <div class="map-container" ref="map"></div>
 </template>
 
 <script>
-
     export default {
         data: function(){
             return {

@@ -1,12 +1,14 @@
 
 <template>
 	<div class="main-container">
-		<cusMap style="width: 100%;height: 100%;"></cusMap>
+		<utilityBar></utilityBar>
+		<cusMap></cusMap>
 	</div>
 </template>
 
 <script>
 	import cusMap from '@components/ui/cus-map.vue';
+	import utilityBar from '@components/ui/utility-bar.vue';
 
 	export default {
 		data: function(){
@@ -19,7 +21,7 @@
 		},
 
 		components:{
-			cusMap
+			cusMap, utilityBar
 		},
 
 		mounted(){
