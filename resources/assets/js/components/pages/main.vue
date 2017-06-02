@@ -1,7 +1,7 @@
 
 <template>
-	<div>
-		<cusMap></cusMap>
+	<div class="main-container">
+		<cusMap style="width: 100%;height: 100%;"></cusMap>
 	</div>
 </template>
 

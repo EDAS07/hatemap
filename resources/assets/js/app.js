@@ -17,9 +17,8 @@ const router = new VueRouter({
 const app = new Vue({
     el: '#app',
     router,
-    mounted() {
+    mounted: function(){
         window.loaded = false;
-
         function initMap() {
             window.loaded = true;
         }
