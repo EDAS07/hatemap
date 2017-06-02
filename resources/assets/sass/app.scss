@@ -2,21 +2,19 @@
 // Fonts
 @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
 
-// Variables
-@import "variables";
-
 // Bootstrap
 $bootstrap-sass-asset-helper: true;
-
-
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
-
 // @import "node_modules/bootstrap-select/sass/bootstrap-select";
+
+// Variables
+@import "variables";
 
 @import "common";
 
 @import "main";
 
+//Component - UI
 @import "cus-map";
 @import "utility-bar";
 
