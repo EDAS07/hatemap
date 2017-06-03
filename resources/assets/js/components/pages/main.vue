@@ -2,6 +2,7 @@
 <template>
 	<div class="main-container">
 		<utilityBar></utilityBar>
+		<storeListBar></storeListBar>
 		<cusMap></cusMap>
 	</div>
 </template>
@@ -9,6 +10,7 @@
 <script>
 	import cusMap from '@components/ui/cus-map.vue';
 	import utilityBar from '@components/ui/utility-bar.vue';
+	import storeListBar from '@components/ui/store-list-bar.vue';
 
 	export default {
 		data: function(){
@@ -21,11 +23,11 @@
 		},
 
 		components:{
-			cusMap, utilityBar
+			cusMap, utilityBar, storeListBar
 		},
 
 		mounted(){
-			// console.log('aaaaa:', this.selectGroup);
+			
 		}
 	}
 </script>

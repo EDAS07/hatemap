@@ -1,0 +1,9 @@
+.store-list-bar-container{
+	height: 100%;
+	width: 25%;
+	background-color: $store-list-bg;
+	// display: inline-block;
+	position: fixed;
+    z-index: 1;
+    right: 0;
+}
