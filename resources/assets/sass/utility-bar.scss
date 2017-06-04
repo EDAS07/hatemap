@@ -29,6 +29,7 @@
     		position: relative;
     		transition: color .5s ease;
     		color: #626365;
+    		cursor: pointer;
     		i {
     			margin-right: 15px;
     			vertical-align: middle;
@@ -37,6 +38,12 @@
     			margin-right: 15px;
     			vertical-align: middle;	
     		}
+    	}
+    	.utility-menu-option:hover{
+    		background-color: #fd9b51;
+    	}
+    	.utility-menu-option:active{
+    		background-color: #e8863c;
     	}
     }
 }

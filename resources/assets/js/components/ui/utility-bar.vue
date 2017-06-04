@@ -9,7 +9,7 @@
             <div>Anonymous</div>
         </div>
         <div class="utility-menu">
-            <div class="utility-menu-option">
+            <div class="utility-menu-option" @click="showSearchBoard = true">
                 <i class="material-icons">search</i>
                 <span>Search</span>
             </div>
@@ -25,17 +25,23 @@
                 <i class="material-icons">exit_to_app</i>
                 <span>Login</span>
             </div>
-
         </div>
+        <searchBoard v-if="showSearchBoard" :showModal="showSearchBoard" @update:showModal="val => showSearchBoard = val"></searchBoard>
     </div>
 </template>
 
 <script>
+
+    import searchBoard from '@components/ui/dialog/search-board.vue';
+
     export default {
         data: function(){
             return {
-                map: null
+                showSearchBoard: false
             }
+        },
+        components:{
+            searchBoard
         },
         methods:{
             
