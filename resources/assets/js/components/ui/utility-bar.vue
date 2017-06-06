@@ -9,11 +9,11 @@
             <div>Anonymous</div>
         </div>
         <div class="utility-menu">
-            <div class="utility-menu-option" @click="showSearchBoard = true">
+            <div class="utility-menu-option" @click="showSearchBoard()">
                 <i class="material-icons">search</i>
                 <span>Search</span>
             </div>
-            <div class="utility-menu-option">
+            <div class="utility-menu-option" @click="showSearchByKeyword()">
                 <img src="images/around_me_icon_24.png">
                 <span>Recent</span>
             </div>
@@ -26,25 +26,30 @@
                 <span>Login</span>
             </div>
         </div>
-        <searchBoard v-if="showSearchBoard" :showModal="showSearchBoard" @update:showModal="val => showSearchBoard = val"></searchBoard>
+        
     </div>
 </template>
 
 <script>
 
-    import searchBoard from '@components/ui/dialog/search-board.vue';
+    
 
     export default {
         data: function(){
             return {
-                showSearchBoard: false
+                
             }
         },
         components:{
-            searchBoard
+            
         },
         methods:{
-            
+            showSearchBoard: function(){
+                Event.fire('showSearchBoard');
+            },
+            showSearchByKeyword: function(){
+                Event.fire('showSearchByKeyword');
+            },
         },
         mounted: function(){
             

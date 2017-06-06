@@ -5870,6 +5870,7 @@ html, body {
   height: 100%;
   width: 200px;
   background-color: #ffac6e;
+  border-right: 4px solid #4C3C1B;
   position: fixed;
   z-index: 1; }
   .utility-bar-container .user-info-box {
@@ -5907,6 +5908,7 @@ html, body {
   height: 100%;
   width: 25%;
   background-color: #6effa3;
+  border-left: 4px solid #0eb149;
   position: fixed;
   z-index: 1;
   right: 0; }
@@ -5939,6 +5941,19 @@ html, body {
   margin-top: 0;
   margin-bottom: 0;
   color: #42b983; }
+
+.modal-body li {
+  list-style: none;
+  padding: 5px;
+  margin-bottom: 2px;
+  color: gray;
+  cursor: pointer; }
+
+.modal-body li:hover {
+  color: black; }
+
+.modal-body li:active {
+  color: red; }
 
 .modal-footer {
   text-align: left; }

@@ -2,15 +2,15 @@
 <template>
     <modal v-if="showModal" @close="closeModal()" ref="modal">
         
-        <h3 slot="header">Select Search Type</h3>
+        <h3 slot="header" class="text-center">Select Search Type</h3>
 
-        <div slot="body">
-            <li>Search by keyword</li>
+        <div slot="body" class="text-center">
+            <li @click="searchByKeyword()">Search by keyword</li>
             <li>Search by region</li>
         </div>
 
-        <div slot="footer">
-            <button class="modal-default-button" @click="$refs.modal.close()">
+        <div slot="footer" class="pull-right">
+            <button class="btn btn-default" @click="$refs.modal.close()">
                 Cancel
             </button>
         </div>
@@ -35,6 +35,11 @@
         methods:{
             closeModal: function(){
                 this.$emit('update:showModal', false);
+            },
+            searchByKeyword: function(){
+                this.$emit('update:showModal', false);
+                this.$emit('showSearchByKeyword');
+                console.log('searchby keyword');
             }
         },
         mounted: function(){
