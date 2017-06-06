@@ -1,6 +1,6 @@
 
 <template>
-    <modal v-if="showModal" @close="closeModal()" ref="modal">
+    <modal class="search-board" v-if="showModal" @close="closeModal()" ref="modal">
         
         <h3 slot="header" class="text-center">Select Search Type</h3>
 

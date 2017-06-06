@@ -5942,19 +5942,6 @@ html, body {
   margin-bottom: 0;
   color: #42b983; }
 
-.modal-body li {
-  list-style: none;
-  padding: 5px;
-  margin-bottom: 2px;
-  color: gray;
-  cursor: pointer; }
-
-.modal-body li:hover {
-  color: black; }
-
-.modal-body li:active {
-  color: red; }
-
 .modal-footer {
   text-align: left; }
 
@@ -5979,3 +5966,33 @@ html, body {
 .modal-leave-active .modal-container {
   -webkit-transform: scale(1.1);
   transform: scale(1.1); }
+
+.search-board li {
+  list-style: none;
+  padding: 5px;
+  margin-bottom: 2px;
+  color: gray;
+  cursor: pointer; }
+
+.search-board li:hover {
+  color: black; }
+
+.search-board li:active {
+  color: red; }
+
+.search-by-keyword .suggest-box {
+  height: 250px;
+  border: 1px solid rgba(0, 0, 0, 0.075);
+  border-radius: 4px;
+  padding: 5px;
+  color: gray; }
+  .search-by-keyword .suggest-box .query-string {
+    padding: 5px;
+    cursor: pointer;
+    background-color: #ddd;
+    border-radius: 4px;
+    margin-bottom: 5px; }
+  .search-by-keyword .suggest-box .query-string:hover {
+    color: black; }
+  .search-by-keyword .suggest-box .query-string:active {
+    color: red; }

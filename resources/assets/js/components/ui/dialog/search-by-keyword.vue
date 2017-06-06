@@ -1,22 +1,17 @@
 
 <template>
-    <modal v-if="showModal" :width="600" @close="closeModal()" ref="modal">
+    <modal class="search-by-keyword" v-if="showModal" :width="600" @close="closeModal()" ref="modal">
         
         <h3 slot="header" class="text-center">Search By Keyword</h3>
 
         <div slot="body">
-            <!-- <div class="container-fluid">
-              <div class="row">
-                <div class="col-sm-4" style="background-color:lavender;">.col-sm-4</div>
-                <div class="col-sm-4" style="background-color:lavenderblush;">.col-sm-4</div>
-                <div class="col-sm-4" style="background-color:lavender;">.col-sm-4</div>
-              </div>
-            </div> -->
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-sm-4">
-                        <div class="suggest-box">
-                            Query Suggest
+                    <div class="col-sm-4 ">
+                        <div class="suggest-box text-center">
+                            <div class="query-string" >rice</div>
+                            <div class="query-string">noodle</div>
+                            <div class="query-string">big banana</div>
                         </div>
                     </div>
 

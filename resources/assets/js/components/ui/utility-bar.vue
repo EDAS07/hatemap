@@ -26,7 +26,6 @@
                 <span>Login</span>
             </div>
         </div>
-        
     </div>
 </template>
 

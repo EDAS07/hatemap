@@ -1,0 +1,39 @@
+.search-board{
+	li {
+	  list-style: none;
+	  padding: 5px;
+	  margin-bottom: 2px;
+	  color: gray;
+	  cursor: pointer;
+	}
+	li:hover{
+	  color: black;
+	}
+	li:active{
+	  color: red;
+	}
+}
+
+
+.search-by-keyword{
+	.suggest-box{
+		height: 250px;
+		border: 1px solid rgba(0, 0, 0, 0.075);
+		border-radius: 4px;
+		padding: 5px;
+		color: gray;
+		.query-string{
+			padding: 5px;
+			cursor: pointer;
+			background-color: #ddd;
+			border-radius: 4px;
+			margin-bottom: 5px;
+		}
+		.query-string:hover{
+			color: black;
+		}
+		.query-string:active{
+			color: red;
+		}
+	}
+}
