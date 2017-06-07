@@ -14,26 +14,43 @@
 	}
 }
 
+.default-box {
+	border: 1px solid rgba(0, 0, 0, 0.075);
+	border-radius: 4px;
+}
 
 .search-by-keyword{
 	.suggest-box{
-		height: 250px;
-		border: 1px solid rgba(0, 0, 0, 0.075);
-		border-radius: 4px;
 		padding: 5px;
-		color: gray;
+		height: 250px;
 		.query-string{
 			padding: 5px;
 			cursor: pointer;
 			background-color: #ddd;
 			border-radius: 4px;
 			margin-bottom: 5px;
+			color: #3357ea;
 		}
 		.query-string:hover{
-			color: black;
+			color: #6681f1;
+			background-color: black;
 		}
 		.query-string:active{
-			color: red;
+			color: #6681f1;
+			background-color: #6b6b6b;
 		}
 	}
+
+	.search-box {
+		height: 250px;
+		.cus-search-header{
+			margin-bottom: 5px;
+			padding: 10px;
+			border-bottom: 1px solid #e5e5e5;
+		}
+		.cus-search-box{
+			padding: 10px;
+		}
+	}
+	
 }

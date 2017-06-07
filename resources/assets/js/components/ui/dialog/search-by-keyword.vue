@@ -8,19 +8,29 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-sm-4 ">
-                        <div class="suggest-box text-center">
+                        <div class="default-box suggest-box text-center">
                             <div class="query-string" >rice</div>
                             <div class="query-string">noodle</div>
                             <div class="query-string">big banana</div>
+                            <div class="query-string">tea</div>
+                            <div class="query-string">restaurent</div>
+                            <div class="query-string">tea</div>
+                            <div class="query-string">restaurent</div>
                         </div>
                     </div>
 
                     <div class="col-sm-8">
                         <div class="row">
-                            You can select keyword from left box
-                        </div>
-                        <div class="row">
-                            <input type="" name="" placeholder="Input Field">
+                            <div class="default-box search-box">
+                                <div class="cus-search-header">
+                                    You can select keyword from left box
+                                </div>
+                                <div class="cus-search-box">
+                                    <div class="form-group" >
+                                        <input type="" name="" class="form-control" placeholder="Search...">    
+                                    </div>
+                                </div>    
+                            </div>
                         </div>
                     </div>
                 </div>

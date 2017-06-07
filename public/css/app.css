@@ -5980,19 +5980,32 @@ html, body {
 .search-board li:active {
   color: red; }
 
-.search-by-keyword .suggest-box {
-  height: 250px;
+.default-box {
   border: 1px solid rgba(0, 0, 0, 0.075);
-  border-radius: 4px;
+  border-radius: 4px; }
+
+.search-by-keyword .suggest-box {
   padding: 5px;
-  color: gray; }
+  height: 250px; }
   .search-by-keyword .suggest-box .query-string {
     padding: 5px;
     cursor: pointer;
     background-color: #ddd;
     border-radius: 4px;
-    margin-bottom: 5px; }
+    margin-bottom: 5px;
+    color: #3357ea; }
   .search-by-keyword .suggest-box .query-string:hover {
-    color: black; }
+    color: #6681f1;
+    background-color: black; }
   .search-by-keyword .suggest-box .query-string:active {
-    color: red; }
+    color: #6681f1;
+    background-color: #6b6b6b; }
+
+.search-by-keyword .search-box {
+  height: 250px; }
+  .search-by-keyword .search-box .cus-search-header {
+    margin-bottom: 5px;
+    padding: 10px;
+    border-bottom: 1px solid #e5e5e5; }
+  .search-by-keyword .search-box .cus-search-box {
+    padding: 10px; }
