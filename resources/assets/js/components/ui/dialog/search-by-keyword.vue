@@ -28,7 +28,7 @@
                                 <div class="cus-search-box">
                                     <div class="form-group has-feedback" >
                                         <input type="" name="" class="form-control" placeholder="Search...">
-                                        <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                                        <span class="action-active glyphicon glyphicon-remove form-control-feedback"></span>
                                     </div>
                                 </div>    
                             </div>

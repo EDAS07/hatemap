@@ -51,6 +51,13 @@
 		.cus-search-box{
 			padding: 10px;
 		}
+		.action-active {
+			cursor: pointer;
+			pointer-events: auto;
+		}
+		.action-active:hover {
+			color: red;
+		}
 	}
 	
 }
