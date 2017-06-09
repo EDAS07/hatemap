@@ -1,10 +1,15 @@
 
 // Fonts
 @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+@import url(https://fonts.googleapis.com/icon?family=Material+Icons);
 
 // Bootstrap
-$bootstrap-sass-asset-helper: true;
+// $bootstrap-sass-asset-helper: false;
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap-compass";
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+// @import url(https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css);
+//https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css
 // @import "node_modules/bootstrap-select/sass/bootstrap-select";
 
 // Variables

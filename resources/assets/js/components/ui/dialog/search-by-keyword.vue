@@ -26,8 +26,9 @@
                                     You can select keyword from left box
                                 </div>
                                 <div class="cus-search-box">
-                                    <div class="form-group" >
-                                        <input type="" name="" class="form-control" placeholder="Search...">    
+                                    <div class="form-group has-feedback" >
+                                        <input type="" name="" class="form-control" placeholder="Search...">
+                                        <span class="glyphicon glyphicon-remove form-control-feedback"></span>
                                     </div>
                                 </div>    
                             </div>

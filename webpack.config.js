@@ -12,7 +12,7 @@ module.exports = {
 
         app: './resources/assets/js/app.js',
 
-        vendor: ['vue', 'vue-router', 'axios', 'jquery', 'bootstrap']
+        vendor: ['vue', 'vue-router', 'axios', 'jquery', 'bootstrap-sass']
 
     },
 
@@ -37,6 +37,8 @@ module.exports = {
         rules: [
 
             {test: /\.scss$/, loader: ExtractTextPlugin.extract('css-loader!sass-loader')},
+
+            { test: /\.(png|woff|woff2|eot|ttf|svg)$/, loader: 'url-loader?limit=100000' },
             
 
             {
