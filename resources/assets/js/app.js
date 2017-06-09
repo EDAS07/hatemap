@@ -1,10 +1,14 @@
 import style from '@sass/app.scss';
 import main from '@components/pages/main.vue';
+// import directives
+import inputClear from '@components/directives/inputClear.vue';
 
 require('./vendor/common.js');
 require('./vendor/utilities.js');
 
 Vue.use(VueRouter);
+
+Vue.directive('inputClear', inputClear)
 
 const routes = [
     { path: '/', component: main }

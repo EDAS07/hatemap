@@ -6014,3 +6014,5 @@ html, body {
     pointer-events: auto; }
   .search-by-keyword .search-box .action-active:hover {
     color: red; }
+  .search-by-keyword .search-box .action-active:active {
+    color: #ff7a00; }

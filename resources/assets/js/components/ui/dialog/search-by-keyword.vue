@@ -27,8 +27,8 @@
                                 </div>
                                 <div class="cus-search-box">
                                     <div class="form-group has-feedback" >
-                                        <input type="" name="" class="form-control" placeholder="Search...">
-                                        <span class="action-active glyphicon glyphicon-remove form-control-feedback"></span>
+                                        <input type="" name="" class="form-control" v-model="searchText" placeholder="Search..." v-input-clear>
+                                        <span class="action-active glyphicon glyphicon-remove form-control-feedback" :class="{'hide': searchText == ''}" @click="searchText = ''"></span>
                                     </div>
                                 </div>    
                             </div>
@@ -58,7 +58,7 @@
         props: ['showModal'],
         data: function(){
             return {
-                
+                searchText: ''
             }
         },
         components:{
