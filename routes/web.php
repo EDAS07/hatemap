@@ -17,6 +17,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('auth/check', 'Auth\AuthController@check');
+
 Route::get('/home', 'HomeController@index');
 
 Route::get('auth/facebook', 'Auth\RegisterController@redirectToProvider');

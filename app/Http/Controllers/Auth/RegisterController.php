@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Socialite;
@@ -54,6 +57,41 @@ class RegisterController extends Controller
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
         ]);
+    }
+
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function register(Request $request)
+    {
+        $validator = $this->validator($request->all());
+        if(!$validator->passes()){
+            return response()->json([
+                'ReturnCode' => ERR_ACC_PARAMS_FAIL,
+                'data' => [
+                    'msg' => $validator->messages()
+                ]
+            ]);
+        }
+
+        $data = $request->all();
+        
+        event(new Registered($user = $this->create($request->all())));
+
+        $this->guard()->login($user);
+
+        return response()->json([
+            'ReturnCode' => NO_ERROR,
+            'data' => [
+                'user' => $user
+            ]
+        ]);
+
+        return $this->registered($request, $user)
+            ?: redirect($this->redirectPath());
     }
 
     /**

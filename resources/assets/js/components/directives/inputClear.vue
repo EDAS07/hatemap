@@ -1,7 +1,7 @@
 <script>
     export default {
       inserted: function (el) {
-        console.log('test AAAdirective');
+        console.log('test DDDdirective');
       }
     }
 </script>

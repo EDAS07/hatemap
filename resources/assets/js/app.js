@@ -1,22 +1,27 @@
 import style from '@sass/app.scss';
 import main from '@components/pages/main.vue';
-// import directives
-import inputClear from '@components/directives/inputClear.vue';
+
+import auth from '@components/services/auth';
+
 
 require('./vendor/common.js');
 require('./vendor/utilities.js');
 
 Vue.use(VueRouter);
 
-Vue.directive('inputClear', inputClear)
+//Use directives
+// This directive is never used, just for test.
+// Vue.directive('inputClear', require('@components/directives/inputClear.vue'));
 
 const routes = [
     { path: '/', component: main }
 ]
 
-const router = new VueRouter({
+export const router = new VueRouter({
     routes // short for routes: routes
 })
+
+auth.checkAuth();
 
 const app = new Vue({
     el: '#app',

@@ -27,5 +27,7 @@
         src="https://maps.googleapis.com/maps/api/js?v=3&key={!! env('GOOGLEMAP_API_ID') !!}&callback=initMap&libraries=places">
     </script>
 
+    
+
 </body>
 </html>

@@ -4,8 +4,13 @@
 		<utilityBar></utilityBar>
 		<storeListBar></storeListBar>
 		<cusMap></cusMap>
+
+
 		<searchBoard v-if="showSearchBoard" :showModal="showSearchBoard" @update:showModal="val => showSearchBoard = val" @showSearchByKeyword="showSearchByKeyword = true"></searchBoard>
 		<searchByKeyword v-if="showSearchByKeyword" :showModal="showSearchByKeyword" @update:showModal="val => showSearchByKeyword = val"></searchByKeyword>
+		<loginDialog v-if="showLogin" :showModal="showLogin" @update:showModal="val => showLogin = val"></loginDialog>
+		<registerDialog v-if="showRegister" :showModal="showRegister" @update:showModal="val => showRegister = val"></registerDialog>
+
 	</div>
 </template>
 
@@ -16,12 +21,16 @@
 
 	import searchBoard from '@components/ui/dialog/search-board.vue';
 	import searchByKeyword from '@components/ui/dialog/search-by-keyword.vue';
+	import loginDialog from '@components/ui/dialog/login-dialog.vue';
+	import registerDialog from '@components/ui/dialog/register-dialog.vue';
 
 	export default {
 		data: function(){
 			return {
 				showSearchBoard: false,
-                showSearchByKeyword: false
+                showSearchByKeyword: false,
+                showLogin: false,
+                showRegister: false
 			}
 		},
 		methods:{
@@ -29,7 +38,7 @@
 		},
 
 		components:{
-			cusMap, utilityBar, storeListBar, searchBoard, searchByKeyword
+			cusMap, utilityBar, storeListBar, searchBoard, searchByKeyword, loginDialog, registerDialog
 		},
 
 		mounted(){
@@ -39,6 +48,12 @@
             })
 			Event.listen('showSearchByKeyword',function(){
                 self.showSearchByKeyword = true;
+            })
+            Event.listen('showLoginDialog',function(){
+                self.showLogin = true;
+            })
+            Event.listen('showRegisterDialog',function(){
+                self.showRegister = true;
             })
 		}
 	}

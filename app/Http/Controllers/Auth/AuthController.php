@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Auth;
+use Log;
 
-class LoginController extends Controller
+class AuthController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
@@ -20,14 +19,12 @@ class LoginController extends Controller
     |
     */
 
-    use AuthenticatesUsers;
-
     /**
      * Where to redirect users after login.
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $auth;
 
     /**
      * Create a new controller instance.
@@ -36,27 +33,22 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest', ['except' => 'logout']);
+        
     }
 
     /**
-     * Send the response after the user was authenticated.
+     * Display a listing of the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    protected function sendLoginResponse(Request $request)
+    public function check()
     {
-        $request->session()->regenerate();
-
-        $this->clearLoginAttempts($request);
-
         return response()->json([
             'ReturnCode' => NO_ERROR,
             'data' => [
+                'isGuest' => Auth::guest(),
                 'user' => Auth::user()
             ]
         ]);
-
     }
 }

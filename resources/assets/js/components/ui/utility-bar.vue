@@ -21,9 +21,13 @@
                 <img src="images/hot_icon.png">
                 <span>Hots</span>
             </div>
-            <div class="utility-menu-option">
+            <div v-show="!user.authenticated" class="utility-menu-option" @click="showLoginDialog()">
                 <i class="material-icons">exit_to_app</i>
                 <span>Login</span>
+            </div>
+            <div v-show="user.authenticated" class="utility-menu-option" @click="onLogout()">
+                <i class="material-icons">exit_to_app</i>
+                <span>Logout</span>
             </div>
         </div>
     </div>
@@ -31,12 +35,15 @@
 
 <script>
 
-    
+    import auth from '@components/services/auth';
 
     export default {
         data: function(){
             return {
-                
+                user: auth.user,
+                'userObj': {
+                    isLogin: false
+                }
             }
         },
         components:{
@@ -49,6 +56,12 @@
             showSearchByKeyword: function(){
                 Event.fire('showSearchByKeyword');
             },
+            showLoginDialog: function(){
+                Event.fire('showLoginDialog');
+            },
+            onLogout: function(){
+                auth.logout();
+            }
         },
         mounted: function(){
             

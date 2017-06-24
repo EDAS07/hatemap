@@ -17,7 +17,6 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
 
-
 Route::post('stores/updateSearchPlaces', 'StoreController@updateSearchPlaces');
 Route::post('stores/getNearbyPlace', 'StoreController@getNearbyPlace');
 Route::resource('stores', 'StoreController');

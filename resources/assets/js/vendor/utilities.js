@@ -9,22 +9,28 @@ window.AjaxCall = function(type, url, data, scb, ecb) {
         })
         .then(
             response => {
-                if (response.data.ReturnCode == 0x00000000) {
-                    scb(response.data);
+                switch(response.data.ReturnCode){
+                    case 0x00000000:
+                        scb(response.data);
+                        break;
+                    default:
+                        console.log('error occur');
+                        if (isFunction(ecb)) {
+                            ecb(response.data);
+                        }
                 }
             }
         )
         .catch(
             error => {
                 let er = Object.assign({}, error);
+                console.log('ajax catch error:', er);
                 if (er.response.status == 401) {
                     location.href = "login";
                 }
-
                 if (isFunction(ecb)) {
                     ecb();
                 }
-
             }
         );
 }
