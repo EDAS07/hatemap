@@ -19,7 +19,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="password" class="col-lg-4 control-label">A密碼：</label>
+                    <label for="password" class="col-lg-4 control-label">密碼：</label>
 
                     <div class="col-lg-6">
                         <input id="password" type="password" class="form-control" v-model="password" name="password" required placeholder="Password">
@@ -87,6 +87,11 @@
                     return false;
                 }
                 return true;
+            }
+        },
+        watch: {
+            email: function (newValue) {
+                this.errMsg = null;
             }
         },
         components:{

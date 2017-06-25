@@ -4,9 +4,9 @@
         <div class="user-info-box">
             <div class="header">Hi, Hater!</div>
             <div class="text-center">
-                <img class="user-profile-img" src="images/user_icon.png">
+                <img class="user-profile-img" src="images/user_icon.png" @click="printUser()">
             </div>
-            <div>Anonymous</div>
+            <div>{{ username }}</div>
         </div>
         <div class="utility-menu">
             <div class="utility-menu-option" @click="showSearchBoard()">
@@ -46,10 +46,21 @@
                 }
             }
         },
+        computed: {
+            username: function(){
+                if(this.user.info == null){
+                    return 'Anonymous';
+                }
+                return this.user.info.name;
+            }
+        },
         components:{
             
         },
         methods:{
+            printUser: function(){
+                console.log('User:', this.user.info.name);
+            },
             showSearchBoard: function(){
                 Event.fire('showSearchBoard');
             },
