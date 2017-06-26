@@ -5,7 +5,6 @@
 		<storeListBar></storeListBar>
 		<cusMap></cusMap>
 
-
 		<searchBoard v-if="showSearchBoard" :showModal="showSearchBoard" @update:showModal="val => showSearchBoard = val" @showSearchByKeyword="showSearchByKeyword = true"></searchBoard>
 		<searchByKeyword v-if="showSearchByKeyword" :showModal="showSearchByKeyword" @update:showModal="val => showSearchByKeyword = val"></searchByKeyword>
 		<loginDialog v-if="showLogin" :showModal="showLogin" @update:showModal="val => showLogin = val"></loginDialog>
