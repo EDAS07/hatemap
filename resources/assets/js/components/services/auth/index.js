@@ -13,7 +13,7 @@ export default {
 		AjaxCall('post', '/login', data, ret => {
 			this.user.authenticated = true;
 			this.user.info = ret.data.user;
-			
+
 			if(isFunction(context.closeModal)){
 				context.closeModal();
 			}
@@ -52,6 +52,20 @@ export default {
 		    console.log('login ajx success:', ret);
 		}, ret => {
 		    context.errMsg = ret.data.msg;
+		});
+	},
+
+	sendResetPWDLink: function(context, credentials){
+		let data = credentials;
+		context.waiting = true;
+		AjaxCall('post', '/password/email', data, ret => {
+		    console.log('login ajx success:', ret);
+		    context.action_result = 'success';
+		    context.waiting = false;
+		}, ret => {
+		    console.log('send reset link fail:', ret);
+		    context.action_result = 'fail';
+		    context.waiting = false;
 		});
 	},
 

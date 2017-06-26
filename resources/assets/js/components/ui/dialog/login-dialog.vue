@@ -42,7 +42,7 @@
                             Login
                         </button>
 
-                        <a class="btn btn-link" href="/password/reset">
+                        <a class="btn btn-link" @click="showForgotPasswordDialog()">
                             Forgot Your Password?
                         </a>
                     </div>
@@ -75,7 +75,6 @@
         props: ['showModal'],
         data: function(){
             return {
-                searchText: '',
                 errMsg: null,
                 email: '',
                 password: ''
@@ -113,6 +112,10 @@
             },
             showRegisterDialog: function(){
                 Event.fire('showRegisterDialog');
+                this.closeModal();
+            },
+            showForgotPasswordDialog: function(){
+                Event.fire('showForgotPasswordDialog');
                 this.closeModal();
             }
         },

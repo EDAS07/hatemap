@@ -76,7 +76,6 @@
         props: ['showModal'],
         data: function(){
             return {
-                searchText: '',
                 errMsg: {
                     name: null,
                     email: null,

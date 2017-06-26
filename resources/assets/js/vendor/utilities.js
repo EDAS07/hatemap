@@ -13,6 +13,9 @@ window.AjaxCall = function(type, url, data, scb, ecb) {
                     case 0x00000000:
                         scb(response.data);
                         break;
+                    case 0x00001100: //csrf error
+                        location.reload();
+                        break;
                     default:
                         console.log('error occur');
                         if (isFunction(ecb)) {
