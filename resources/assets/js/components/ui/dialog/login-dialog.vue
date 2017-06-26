@@ -2,7 +2,11 @@
 <template>
     <modal class="login-dialog" v-if="showModal" :width="300" @close="closeModal()" ref="modal">
         
-        <div slot="header" class="text-left">Login</div>
+        <div slot="header" class="text-left">Login
+            <button type="button" class="close" aria-label="Close" @click="$refs.modal.close()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
 
         <div slot="body">
             <form class="form-horizontal" role="form" method="POST" action="/login" v-on:submit.prevent="login()">
@@ -28,11 +32,14 @@
 
                 <div class="form-group">
                     <div class="col-lg-6">
-                        <div class="checkbox">
+                        <div class="checkbox pull-left">
                             <label>
                                 <input type="checkbox" name="remember"> Remember Me
                             </label>
                         </div>
+                        <a class="btn btn-link pull-right" @click="showForgotPasswordDialog()">
+                            Forgot Password?
+                        </a>
                     </div>
                 </div>
 
@@ -41,24 +48,20 @@
                         <button type="submit" class="btn btn-primary">
                             Login
                         </button>
-
-                        <a class="btn btn-link" @click="showForgotPasswordDialog()">
-                            Forgot Your Password?
+                        <a class="btn btn-link" @click="showRegisterDialog()">
+                            Register
                         </a>
                     </div>
                 </div>
             </form>
+            
         </div>
 
-        <div slot="footer"  >
-            <a class="btn btn-link pull-left" @click="showRegisterDialog()">
-                Register
-            </a>
-
-            <div class="pull-right">
-                <button class="btn btn-default" @click="$refs.modal.close()">
-                    Cancel
-                </button>
+        <div slot="footer">
+            <div class="social-link text-left">
+                <a class="btn btn-link" href="/auth/facebook">
+                    <img src="/images/fb-login.png">
+                </a>
             </div>
         </div>
         

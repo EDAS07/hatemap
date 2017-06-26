@@ -6021,6 +6021,9 @@ html, body {
   -webkit-transform: scale(1.1);
   transform: scale(1.1); }
 
+.login-dialog .social-link img {
+  height: 34px; }
+
 .search-board li {
   list-style: none;
   padding: 5px;
