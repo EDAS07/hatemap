@@ -4,7 +4,7 @@
         <div class="user-info-box">
             <div class="header">Hi, Hater!</div>
             <div class="text-center">
-                <img class="user-profile-img" src="images/user_icon.png" @click="printUser()">
+                <img class="user-profile-img" v-bind:src="userAvatar" @click="printUser()">
             </div>
             <div>{{ username }}</div>
         </div>
@@ -52,7 +52,19 @@
                     return 'Anonymous';
                 }
                 return this.user.info.name;
-            }
+            },
+            getUserAvatar: function(){
+                if(this.user.info == null){
+                    return 'images/user_icon.png';
+                }else{
+                    let fb_id = this.user.info.facebook_id;
+                    if(fb_id == '' || fb_id === undefined || fb_id == null){
+                        return 'images/user_icon.png';
+                    }else{
+                        return 'https://graph.facebook.com/v2.8/' +  fb_id + '/picture?type=normal' ;
+                    }
+                }
+            },
         },
         components:{
             
