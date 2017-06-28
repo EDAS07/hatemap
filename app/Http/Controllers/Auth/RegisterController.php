@@ -140,7 +140,9 @@ class RegisterController extends Controller
                 'name' => $socialUser->getName(),
                 'email' => $socialUser->getEmail(),
             ]);
-        }
+        }echo 3 > /proc/sys/vm/drop_caches
+
+
 
         $user->avatar = $socialUser->getAvatar();
 
@@ -148,7 +150,7 @@ class RegisterController extends Controller
 
         auth()->login($user);
 
-        return redirect()->to('/home');
+        return redirect()->to('/');
         // $user->token;
     }    
 }
