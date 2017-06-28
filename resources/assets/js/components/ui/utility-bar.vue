@@ -53,7 +53,7 @@
                 }
                 return this.user.info.name;
             },
-            getUserAvatar: function(){
+            userAvatar: function(){
                 if(this.user.info == null){
                     return 'images/user_icon.png';
                 }else{
