@@ -31,7 +31,7 @@
                 </div>
 
                 <div class="form-group">
-                    <div class="col-lg-6">
+                    <div class="col-lg-7 col-lg-offset-1">
                         <div class="checkbox pull-left">
                             <label>
                                 <input type="checkbox" name="remember"> Remember Me
@@ -44,7 +44,7 @@
                 </div>
 
                 <div class="form-group">
-                    <div class="col-lg-8">
+                    <div class="col-lg-8 col-lg-offset-1">
                         <button type="submit" class="btn btn-primary">
                             Login
                         </button>

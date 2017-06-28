@@ -30,9 +30,11 @@
 .search-by-keyword{
 	.suggest-box{
 		padding: 5px;
-		height: 250px;
+		display: flex;
+		-webkit-flex-flow: row wrap;
 		.query-string{
 			padding: 5px;
+			margin: 5px;
 			cursor: pointer;
 			background-color: #ddd;
 			border-radius: 4px;
@@ -50,7 +52,7 @@
 	}
 
 	.search-box {
-		height: 250px;
+		// height: 250px;
 		.cus-search-header{
 			margin-bottom: 5px;
 			padding: 10px;
@@ -58,6 +60,9 @@
 		}
 		.cus-search-box{
 			padding: 10px;
+			.form-group{
+				margin-bottom: 10px;
+			}
 		}
 		.action-active {
 			cursor: pointer;

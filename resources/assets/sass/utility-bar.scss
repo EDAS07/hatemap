@@ -90,6 +90,7 @@
         top: 16%;
         left: 6px;
         i {
+            margin: auto;
             &::after{
                 content: "keyboard_arrow_right";    
             }
@@ -99,7 +100,11 @@
         display: none;
     }
     .utility-menu{
+        text-align: center;
         .utility-menu-option{
+            i,img {
+                margin: auto;
+            }
             span {
                 display: none;
             }

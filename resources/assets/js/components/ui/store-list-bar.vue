@@ -1,7 +1,7 @@
 
 <template>
-    <div class="store-list-bar-container">
-        <div>store list</div>
+    <div class="hidden-xs store-list-bar-container">
+        <div>store lista</div>
     </div>
 </template>
 
