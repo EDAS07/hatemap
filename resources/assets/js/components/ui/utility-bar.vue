@@ -1,6 +1,9 @@
 
 <template>
-    <div class="utility-bar-container">
+    <div class="utility-bar-container" :class="{'utility-bar-container-shrink': isClose }">
+        <div class="fold-bar" @click="isClose = !isClose">
+            <i class="material-icons"></i>
+        </div>
         <div class="user-info-box">
             <div class="header">Hi, Hater!</div>
             <div class="text-center">
@@ -43,7 +46,8 @@
                 user: auth.user,
                 'userObj': {
                     isLogin: false
-                }
+                },
+                isClose: true
             }
         },
         computed: {

@@ -5924,9 +5924,32 @@ html, body {
   height: 100%;
   width: 200px;
   background-color: #ffac6e;
-  border-right: 4px solid #4C3C1B;
+  border-right: 2px solid #4C3C1B;
   position: fixed;
   z-index: 1; }
+  .utility-bar-container .fold-bar {
+    position: fixed;
+    width: 44px;
+    height: 44px;
+    line-height: 44px;
+    text-align: center;
+    border-radius: 50%;
+    top: 13%;
+    left: 175px;
+    cursor: pointer;
+    background-color: #000000; }
+    .utility-bar-container .fold-bar:hover {
+      background-color: #616161; }
+    .utility-bar-container .fold-bar:active {
+      background-color: #000000; }
+      .utility-bar-container .fold-bar:active i {
+        color: #4ee8ea; }
+    .utility-bar-container .fold-bar i {
+      color: white;
+      line-height: 44px;
+      text-align: center; }
+      .utility-bar-container .fold-bar i::after {
+        content: "keyboard_arrow_left"; }
   .utility-bar-container .user-info-box {
     height: 230px;
     padding: 15px;
@@ -5936,6 +5959,7 @@ html, body {
       font-weight: 700;
       margin-bottom: 15px; }
     .utility-bar-container .user-info-box .user-profile-img {
+      border-radius: 50%;
       max-height: 80px;
       height: auto;
       margin-bottom: 15px; }
@@ -5957,6 +5981,23 @@ html, body {
     background-color: #fd9b51; }
   .utility-bar-container .utility-menu .utility-menu-option:active {
     background-color: #e8863c; }
+
+.utility-bar-container-shrink {
+  top: 25%;
+  height: auto;
+  width: 55px;
+  border-top: 2px solid #4C3C1B;
+  border-bottom: 2px solid #4C3C1B;
+  border-right: 2px solid #4C3C1B; }
+  .utility-bar-container-shrink .fold-bar {
+    top: 16%;
+    left: 6px; }
+    .utility-bar-container-shrink .fold-bar i::after {
+      content: "keyboard_arrow_right"; }
+  .utility-bar-container-shrink .user-info-box {
+    display: none; }
+  .utility-bar-container-shrink .utility-menu .utility-menu-option span {
+    display: none; }
 
 .store-list-bar-container {
   height: 100%;

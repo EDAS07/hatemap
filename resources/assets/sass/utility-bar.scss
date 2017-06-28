@@ -2,10 +2,38 @@
 	height: 100%;
 	width: 200px;
 	background-color: $utility-bg;
-	border-right: 4px solid #4C3C1B;
-	// display: inline-block;
+	border-right: 2px solid #4C3C1B;
 	position: fixed;
     z-index: 1;
+    .fold-bar {
+        position: fixed;
+        width: 44px;
+        height: 44px;
+        line-height: 44px;
+        text-align: center;
+        border-radius: 50%;
+        top: 13%;
+        left: 175px;
+        cursor: pointer;
+        background-color: #000000;
+        &:hover {
+            background-color: #616161;
+        }
+        &:active {
+            background-color: #000000;
+            i {
+                color: #4ee8ea;
+            }
+        }
+        i {
+            &::after{
+                content: "keyboard_arrow_left";    
+            }
+            color: white;
+            line-height: 44px;
+            text-align: center;
+        }
+    }
     .user-info-box{
     	height: 230px;
     	padding: 15px;
@@ -47,5 +75,34 @@
     	.utility-menu-option:active{
     		background-color: #e8863c;
     	}
+    }
+}
+
+.utility-bar-container-shrink{
+    top: 25%;
+    height: auto;
+    width: 55px;
+    border-top: 2px solid #4C3C1B;
+    border-bottom: 2px solid #4C3C1B;
+    border-right: 2px solid #4C3C1B;
+    
+    .fold-bar {
+        top: 16%;
+        left: 6px;
+        i {
+            &::after{
+                content: "keyboard_arrow_right";    
+            }
+        }
+    }
+    .user-info-box{
+        display: none;
+    }
+    .utility-menu{
+        .utility-menu-option{
+            span {
+                display: none;
+            }
+        }
     }
 }
