@@ -140,7 +140,7 @@ class RegisterController extends Controller
                 'name' => $socialUser->getName(),
                 'email' => $socialUser->getEmail(),
             ]);
-        }echo 3 > /proc/sys/vm/drop_caches
+        }
 
 
 
