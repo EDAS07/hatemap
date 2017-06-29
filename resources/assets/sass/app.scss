@@ -6,6 +6,7 @@
 
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap-compass";
+$bootstrap-sass-asset-helper: false;
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
 // Variables
