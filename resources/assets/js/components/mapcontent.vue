@@ -256,7 +256,7 @@
                     }
                 }
                 _this.set('markers', markers);
-            },            
+            },
 
             initUserMarker(current){
                 let image = {

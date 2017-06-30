@@ -72,7 +72,7 @@ window.createGroupMarker = function createGroupMarker(group, _this){
     return marker;
 }
 
-window.createMarker = function createMarker(place, _this) {
+/*window.createMarker = function createMarker(place, _this) {
     var placeLoc = new google.maps.LatLng(place.lat, place.lng);
     let getStoreUrl = function(){
         if(place.comments.length > 0){
@@ -120,7 +120,7 @@ window.createMarker = function createMarker(place, _this) {
     });
 
     return marker;
-}
+}*/
 
 window.initMapEvent = function initMapEvent(_this){
     google.maps.event.addListener(_this.map, 'click',function(){
